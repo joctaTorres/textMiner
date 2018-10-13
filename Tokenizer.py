@@ -1,4 +1,7 @@
 from nltk.tokenize import word_tokenize as wt
+from nltk.tokenize import PunktSentenceTokenizer as pt
+from nltk import pos_tag as pt
+
 import string
 
 
@@ -17,7 +20,16 @@ class Tokenizer():
         return open(path, "r").read()
 
     def tokenize(self, text):
-        return wt(self.preprocess(text))
+        tokenizer = pt(text)
+        tSentences =  tokenizer.tokenize(text)
+        punkt = []
+        for sentence in tSentences:
+            try:
+                words = wt(sentence)
+                punkt.append(pt(words)) 
+            except Exception as e:
+                print('Could not tokenize sentence, reason:', str(e))
+        return punkt
 
     def preprocess(self, text):
         punctuations = r'''!()-[]{};:'"’\,<>./?@#$%^&*_~'''
@@ -28,5 +40,5 @@ class Tokenizer():
         return no_punct
 
 
-words = Tokenizer('english').tokenizeFileWords('./example.txt')
+words = Tokenizer('portuguese').tokenizeFileWords('./example.txt')
 print(words)
