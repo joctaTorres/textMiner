@@ -4,8 +4,6 @@ from nltk import pos_tag as ptag
 from nltk.corpus import mac_morpho
 import nltk
 import pickle
-import string
-
 
 class Tokenizer():
     lang = ''
