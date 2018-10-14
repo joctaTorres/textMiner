@@ -60,8 +60,3 @@ class Tokenizer():
             if char not in punctuations:
                no_punct = no_punct + char
         return no_punct
-
-
-
-words = Tokenizer('portuguese').tokenizeFileWords('./example.txt')
-print(words)
