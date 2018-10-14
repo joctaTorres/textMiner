@@ -1,6 +1,6 @@
 from nltk.tokenize import word_tokenize as wt
 from nltk.tokenize import PunktSentenceTokenizer as pt
-from nltk import pos_tag as pt
+from nltk import pos_tag as ptag
 
 import string
 
@@ -20,13 +20,13 @@ class Tokenizer():
         return open(path, "r").read()
 
     def tokenize(self, text):
-        tokenizer = pt(text)
-        tSentences =  tokenizer.tokenize(text)
+        punktTokenizer = pt(text)
+        tSentences =  punktTokenizer.tokenize(text)
         punkt = []
         for sentence in tSentences:
             try:
                 words = wt(sentence)
-                punkt.append(pt(words)) 
+                punkt.append(ptag(words)) 
             except Exception as e:
                 print('Could not tokenize sentence, reason:', str(e))
         return punkt
