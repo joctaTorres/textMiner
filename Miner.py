@@ -1,5 +1,6 @@
 from Tokenizer import Tokenizer
 from TokenWritter import TokenWritter
+import pandas as pd
 
 class Miner():
     filePath = ''
@@ -19,7 +20,11 @@ class Miner():
         self.searchWord = word
 
     def search(self):
-        pass
+        self.generateMidFile()
+        df = pd.read_csv('./minerMid.csv', sep=',', header=0)
+        df['count'] = df.groupby(['PALAVRA', 'TAG ']).size()
+        print(df)
+
 
     def generateMidFile(self):
         self.writter.outputTokens(
@@ -27,4 +32,4 @@ class Miner():
             'minerMid.csv'
         )
 
-Miner('./example.txt', ['tag'], ['word']).generateMidFile()
+Miner('./example.txt', ['tag'], ['word']).search()
