@@ -20,11 +20,15 @@ class Miner():
         self.searchWord = word
 
     def search(self):
+        pass
+
+    def generateDataframe(self):
         self.generateMidFile()
         df = pd.read_csv('./minerMid.csv', sep=',', header=0)
-        df['count'] = df.groupby(['PALAVRA', 'TAG ']).size()
-        print(df)
-
+        df['count'] = df.groupby(['PALAVRA', 'TAG'])['PALAVRA'].transform('count')
+        df.drop_duplicates(inplace=True)
+        df.sort_values(by=['count'], ascending=False , inplace=True, kind='quicksort')
+        
 
     def generateMidFile(self):
         self.writter.outputTokens(
