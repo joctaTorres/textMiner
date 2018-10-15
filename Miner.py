@@ -1,6 +1,10 @@
-import Tokenizer
-import TokenWritter
+from Tokenizer import Tokenizer
+from TokenWritter import TokenWritter
 
 
-words = Tokenizer('portuguese').tokenizeFileWords('./example.txt')
-print(words)
+tokenizer = Tokenizer('portuguese')
+
+TokenWritter().outputTokens(
+    tokenizer.tokenizeFileWords('./example.txt'),
+    'outputtest.csv'
+    )
