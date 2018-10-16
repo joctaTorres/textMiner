@@ -1,0 +1,324 @@
+Desenvolvimento de um Jogo para Ensino de Algoritmos
+Utilizando o Unity3D
+Natália Almeida de Deus Reis 1, Matheus de Almeida Alves1
+, Gilson Saturnino dos
+Santos1
+, Jasane Schio2
+1
+Instituto Federal de Mato Grosso do Sul – Campus Coxim (IFMS)
+– Coxim – MS – Brasil
+2 Universidade Federal de Mato Grosso do Sul – Campus Coxim (UFMS)
+– Coxim – MS – Brasil
+{natalyareys,maatheuss99}@hotmail.com, gilson.santos@ifms.edu.br,
+saneschio@gmail.com,
+Abstract. The discipline of algorithms is considered by many students a
+challenge to be overcome in the area of computing courses, because of the
+content is completely new and not common the reality of education acquired by
+the most part of students. As a way to approach the students of technical courses
+in computer science to the content to the discipline, a game was developed in
+2D platform, in order to improve learning. In order developing this game was
+used the Extreme Programming methodology, the tools Unity3D, Inkscape and
+the programming language C#.
+Resumo. A disciplina de algoritmos é considerada por muitos estudantes um
+desafio a ser superado em cursos da área da computação, devido ao conteúdo
+completamente novo e não habitual a realidade de educação adquirida pela
+maior parte dos alunos. Como uma maneira de aproximar os estudantes dos
+cursos técnicos em informática ao conteúdo da disciplina, foi desenvolvido um
+protótipo de jogo em plataforma 2D, com o objetivo de melhorar o aprendizado.
+No desenvolvimento deste jogo foi utilizada a metodologia Extreme
+Programming, as ferramentas Unity3D, Inkscape e a linguagem de
+programação C#.
+1. Introdução
+Os jogos eletrônicos, para computadores ou outros dispositivos vêm chamando cada vez
+mais a atenção da população. No início, o foco principal era as crianças e os adolescentes,
+porém, com o decorrer dos anos, esse tipo de estereótipo alterou-se, dando mais espaço
+para públicos com as mais diferentes idades. Atualmente, há uma variedade de
+ferramentas para criação de jogos, cada vez mais simples, proporcionando aos usuários
+que não possuem o conhecimento de linguagens de programação criarem seu próprio
+jogo.
+Considerando as dificuldades de aprendizagem dos conteúdos de algoritmos nos
+cursos técnicos de informática, foi desenvolvido neste trabalho um protótipo de jogo para
+ser utilizado como recurso de ensino mais lúdico e atrativo desta disciplina.
+Para a elaboração desse trabalho, fez-se uso de algumas práticas da metodologia 
+Extreme Programming1
+, devido à flexibilidade e praticidade que a mesma oferece em
+diversas etapas da construção de softwares por pequenas equipes. Durante a fase de
+desenvolvimento do jogo foram elaboradas quatro iterações: criação de um jogo 2D em
+que o personagem recolhe moedas, construção de um placar com a quantidade e pontos
+de moedas recolhidas, exibições dos conceitos básicos de algoritmos e um desafio.
+Este trabalho está organizado nas seções Fundamentação Teórica, em que são
+apresentados os conceitos e ferramentas utilizadas, Metodologia, Desenvolvimento e
+Conclusão.
+2. Fundamentação Teórica
+Nesta sessão serão apresentados os conceitos de jogos eletrônicos, benefícios da
+utilização dos mesmos na educação, ferramentas de edição de imagens e código para
+construção de jogos.
+2.1. Jogos Eletrônicos
+Os jogos atualmente são uma fonte de diversão presente nos mais variados aparelhos
+eletrônicos tais como celulares, consoles e computadores. Contudo, eles podem ser
+usados para o desenvolvimento cognitivo, como afirma Piaget (1971), e são
+imprescindíveis na vida das crianças, pois são elementos chaves para o desenvolvimento
+tanto físico quanto intelectual, proporcionando noções de representação, coordenação
+motora e, principalmente, o conhecimento lógico. A teoria de Piaget explica que o modo
+pelo qual a criança interage com o jogo assegura um melhor desenvolvimento, se
+comparada com uma criança que não possui contato.
+Alguns jogos buscam ajudar no desenvolvimento de crianças, além de serem
+recomendados por alguns médicos como exercício de memória para idosos, como consta
+em uma pesquisa de Koepp (1998), cujo objetivo é comprovar se vídeo games melhoram
+o controle cognitivo de idosos. Os resultados obtidos pela pesquisa são de que os idosos
+que utilizaram um jogo de chamado Neuroracer, desenvolvido pela equipe do estudo, por
+um período de um mês, durante 3 horas por semana, melhoraram a capacidade de realizar
+tarefas simultâneas, assim como a atenção e a memória de curto prazo, em comparação a
+um segundo grupo que não teve contato com o jogo.
+ A sensação de vitória ao concluir um objetivo em um jogo é responsável por
+produzir uma substância química chamada Dopamina, conhecida por ser responsável pela
+motivação, pela melhora dos reflexos e pela capacidade de concentração em diversas
+situações que ocorrem simultaneamente [Nature 2013]. Desta forma, após um tempo o
+jogador passa a adquirir uma melhora significante em seus reflexos, habilidades
+cognitivas e entre outros [Nature 2013].
+2.2. Ensino de Algoritmos
+A disciplina de algoritmos está presente nos primeiros semestres dos cursos da área de
+computação e engenharia, de nível técnico e superior, servindo de base para o ensino de
+programação de computadores. Contudo, vários alunos possuem dificuldade de
+
+1 A metodologia para desenvolvimento de softwares Extreme Programming (XP), tem como objetivo a
+agilidade e qualidade de projetos que estão em constante mudança. Esta metodologia é indicada para
+projetos executado por pequenas equipes, sem muita formalidade e documentação menos complexas, com
+foco na qualidade do software e respeito aos prazos previamente estipulados [TELES 2006].
+solucionar os problemas lógicos, em que são utilizadas estratégias, que num primeiro
+momento parecem algo incompreensível. Deste modo, a disciplina de algoritmos provoca
+uma alta taxa de evasão e reprovação [Rapkiewicz 2006, frustrando e desmotivando os
+estudantes, que passam a considerar a unidade curricular um desafio insuperável
+[Rodrigues 2002].
+Uma possibilidade para motivar os estudantes está na utilização de jogos
+eletrônicos, permitindo uma maior imersão do aluno no conteúdo estudado. Segundo
+Carvalho (2006), o universo do jogo é um alargamento do mundo real, mesclado com
+uma representação virtual, tornando o aprendizado mais prazeroso. O personagem no
+jogo é a personificação do jogador no ambiente virtual, desta maneira, o aluno sente-se
+envolvido no conteúdo.
+Os jogos educativos ajudam no desenvolvimento físico e psicológico, mas é
+necessário que o jogo consiga cativar os alunos, sem declarar seu objetivo de ensinar com
+diversão. A inserção de jogos digitais no aprendizado de estudantes ajuda na motivação
+de continuarem a buscar um maior conhecimento através de uma perspectiva única,
+utilizando desafios nos quais necessitam de diversas habilidades cognitivas, bem como
+ajudar no desenvolvimento dessas habilidades, fazendo uso das atividades de tomada de
+decisões que o jogo proporciona [BALASUBRAMANIAN e WILSON 2006]. Outro
+benefício dos jogos nas atividades escolares é na socialização dos alunos, uma vez que
+há um compartilhamento de informações e experiência tanto no ambiente virtual como
+no ambiente físico das escolas, em um processo de aprendizagem mutuo [HSIAO 2007].
+2.3. Game Engine
+De acordo com Kobashikawa (2007), as game engines ou motores de jogos como também
+são conhecidas, são softwares ou um conjunto de bibliotecas que permitem aos
+programadores realizarem o desenvolvimento de um ou mais jogos, de maneira mais
+simplificada. Estas engines permitem a criação de jogos e simulações em tempo real para
+videogames, computadores e dispositivos móveis, abrangendo os mais diversos tipos de
+sistemas operacionais disponíveis no mercado atualmente. As funcionalidades
+disponíveis das engines podem ser divididas em:
+• Rendering Engine (Motor de Renderização): responsável pelas
+modelagens 2D ou 3D;
+• Physics Engine (Motor de Física): responsável para simular a física ou uma
+detecção de uma colisão do jogo;
+• Suporte para sons e animações, networking e inteligência artificial;
+• Linguagem de script.
+Estas funcionalidades tornam as games engine as principais ferramentas de
+desenvolvimento de jogos eletrônicos, gerenciando o processamento básico e as mídias,
+disponibilizando mais tempo para os programadores trabalharem na lógica, no design
+gráfico e nos efeitos sonoros do jogo.
+2.4. Unity3D
+Segundo o site Game Designing (2016) o Unity3D é um dos mais populares motores de
+jogos atualmente no mercado. A game engine foi desenvolvida e mantida pela Unity
+Technologies, pertencente ao grupo Framework Module Engine. Inicialmente o software 
+foi desenvolvido em caráter proprietário, porém no ano de 2009, foi lançada a versão
+gratuita. Um dos maiores benefícios que o Unity oferece é a documentação completa com
+exemplos da API Unity3D, além da comunidade de desenvolvedores que auxiliam outros
+por meio de fóruns, páginas e canais de vídeos na internet.
+O Unity3D é executável nos sistemas operacionais Windows e MAC OS X,
+permitindo programação em três linguagens: C#, Javascript e BOO. As aplicações
+desenvolvidas podem ser utilizadas em diversas plataformas: Windows, Mac OS X, Xbox
+360, Android, Windows Phone 8, PS3, Linux, Xbox One, e entre outras.
+Contudo, não é somente a possibilidade de desenvolvimento em várias plataformas
+que atraem cada vez mais desenvolvedores, mas também as funcionalidades que o
+Unity3D apresenta e o fácil manuseio dos editores, fazendo com que a sua utilização não
+seja somente voltada para jogos, mas também para a realidade virtual (RV) e Web3D, que
+permite navegar em sites que fazem uso de tecnologias 3D.
+Além da engine Unity3D, utilizou-se neste trabalho o editor de imagens Inkscape.
+Este software é livre e permite a edição e a criação imagens vetorial, além de outras
+funções muito importantes na criação de design gráficos, tais como edição de nós, curvas
+bezier e criação de múltiplas camadas.
+3. Metodologia
+Para realizar este trabalho/jogo foi realizada na biblioteca do Instituto Federal de Mato
+Grosso do Sul – Campus Coxim uma pesquisa bibliográfica e histórica sobre a plataforma
+Unity3D e metodologias de desenvolvimento empregadas. Em seguida, foram definidos
+os requisitos para o jogo, tendo como referência a experiência dos alunos da instituição.
+No desenvolvimento foram utilizadas as seguintes práticas da metodologia Extreme
+Programming: os jogos de planejamento, o cliente presente, fases pequenas e design
+simples. Foi optado pela metodologia XP, devido a flexibilidade que a mesma propõe na
+utilização de suas boas práticas e jogos de planejamentos.
+Durante quatro iterações foram criados os modelos de imagens bidimensionais,
+denominados sprites, e implementado as funcionalidades da primeira fase do jogo
+utilizando a linguagem C#. No final da quarta iteração foi concluída a implementação da
+primeira fase do jogo com ensinamentos sobre os algoritmos e um desafio para jogador
+finalizar a fase.
+4. Desenvolvimento
+Será apresentado a seguir, detalhadamente todas as etapas executadas na criação do jogo
+proposto, desde seus conceitos de design até a finalização de um protótipo do jogo.
+4.1. Estórias
+Fazendo uso das boas práticas da metodologia XP, criou-se uma tabela contendo as
+estórias (requisitos) necessários para a criação do jogo, como pode ser verificado na
+Tabela 1. Cada estória elaborada foi implementada em uma iteração de 1 semana.
+Tabela 1. Estórias (requisitos) do jogo proposto
+Estórias Tarefas
+1. Realização de um jogo 2D, em
+que o personagem recolhe
+moedas.
+1.1. Criação de esboços referentes as fases e as
+sprites ou imagens que se utiliza no jogo;
+1.2. Implementação dos códigos na aplicação dos
+movimentos dos personagens, tais como: andar
+para a direita, esquerda e pular, além de criar suas
+respectivas animações;
+1.3. Construção da cena de game over, no
+momento em que o personagem cair da
+plataforma e o botão de iniciar o jogo novamente.
+2. Construção de um placar com
+quantos pontos e moedas foram
+coletadas pelo personagem do
+jogo. Efeitos sonoros durante o
+jogo.
+2.1. Implementação do código para o personagem
+coletar as moedas do jogo;
+2.2. Contabilize e mostre a pontuação e quantas
+moedas foram coletadas;
+2.3. Ao se dar o início do jogo reproduza uma
+música e ao pular um som de pulo.
+3. Ao término da primeira fase
+deve ser apresentado os conceitos
+básicos sobre algoritmos com as
+opções de avançar ou voltar entre
+os conceitos ou iniciar o desafio
+final da fase.
+3.1. Alterações e criações de novas sprites
+referentes a plataforma do jogo e os conceitos de
+algoritmos, além do algoritmo no qual é o desafio
+final da fase;
+3.2. Implementação dos códigos necessários para
+a transição dos conceitos e o algoritmo.
+4. Ao final dos conceitos dar
+início ao desafio final do jogo
+composto por um algoritmo para
+ser completado e a exibição da
+mensagem sobre o vencimento da
+fase.
+4.1. Implementação das sprites e do código do
+desafio;
+4.2. Revisão geral dos códigos e funcionalidades
+do jogo, corrigindo os erros apresentados durante
+a sua execução.
+4.2. Primeira Iteração
+Em relação a criação do jogo, foi realizado a disposição dos objetos em cena, tais como
+as sprites do personagem, da plataforma (chão onde o personagem do jogo percorre) e as
+moedas. O Unity3D disponibiliza inúmeras funções com relações aos eventos físicos do
+jogo, como por exemplo, o Rigidbody2D, responsável por tornar o objeto da cena um
+corpo rígido no qual irá sofrer com uma força gravitacional e o Box Collider2D, que
+realiza a função de detectar se houve uma colisão com outro objeto em cena. Também
+foram codificados os movimentos de andar para a direita e para a esquerda e o movimento
+de pulo, como pode ser verificado na Figura 1. 
+Figura 1. Linhas de Códigos para fazer a movimentação do
+personagem
+4.3. Segunda Iteração
+O objetivo desta iteração foi criar um placar, contendo as informações sobre quantas
+moedas foram coletadas e a pontuação total de cada moeda. Também foram inseridos
+efeitos sonoros no início do jogo e a cada momento em que o personagem pula ou entra
+em contato com uma moeda.
+Para utilização de moedas no jogo foi utilizado o recurso Prefab do Unity3D que
+permite a organização automática dos componentes da tela a cada alteração de um objeto.
+Para a criação do placar foi necessário a utilização do recurso do Unity3D chamado User
+Interface (UI) ou Interface de Usuário, que permite a criação rápida e simples dessas
+interfaces.
+4.4. Terceira Iteração
+Durante esta iteração foi inserido no jogo os conceitos básicos de algoritmo, para que o
+jogador possa resolver o desafio proposto. Durante a apresentação destes conceitos é
+permitido que o jogador avance ou volte entre os conteúdos
+Para apresentação dos conceitos foi criada uma nova cena do jogo contento um
+Canvas com os elementos Imagens e Button. No elemento Imagens são recebidas as
+sprites com os conceitos de algoritmos e no Button são recebidas as sprites de botões de
+avançar, voltar e play. O objeto Canvas recebe um script em que possui três métodos
+diferentes: Proximo(), Anterior() e Iniciar(), responsáveis por realizar a troca entre as
+sprites, como pode ser observado na Figura 2.
+Figura 2. Linhas de Códigos para realizar as trocas entre os
+conceitos e dar início ao desafio
+4.5. Quarta Iteração
+Esta última iteração teve como principal objetivo a finalização do protótipo do jogo e a
+correção de erros que apareceram durante a sua codificação e execução. Um dos maiores
+problemas enfrentados foi uma má execução do jogo, sendo necessária uma nova lógica
+para a realização de algumas funções do personagem ou dos objetos em cena, além da
+utilização de outros recursos que o Unity3D oferece.
+Também foi implementado nesta iteração o desafio de completar um algoritmo.
+Neste desafio, o jogador arrasta um bloco de código para dentro das lacunas do algoritmo.
+Para validar se o bloco está correto foram codificados dois métodos, chamados
+OnTriggerEnter2D() e o OnTriggerExit2D(), para realizar comparações que verificam se
+ambos os objetos possuem o mesmo valor, como pode ser verificado na Figura 3. Caso
+possuam o mesmo valor a peça fica impedida de ser arrastada novamente, sinalizando
+que o usuário acertou.
+Figura 3. Linhas de Códigos para a verificação se o bloco está
+correto ou não, de modo que permite que seja arrastada
+novamente ou fica impedida.
+4.6. Resultados
+Após a conclusão da quarta iteração foi finalizado o protótipo do jogo. O resultado final
+do jogo pode ser observado na Figura 4. Os conceitos de algoritmos que são apresentados
+no fim da primeira fase podem ser vistos na Figura 5.
+Figura 4. Início do Jogo
+Figura 5. Conceitos de Algoritmos
+O algoritmo que o jogador deve completar para que a primeira fase do jogo seja
+finalizada pode ser verificado na Figura 6.
+Figura 6. Algoritmos que deve ser completado
+Deste modo, após a finalização da implementação das quatros iterações, foi
+concluído o protótipo da primeira fase do jogo2
+.
+5. Conclusão
+Para muitos integrantes dos primeiros semestres do curso técnico em informática a
+disciplina de algoritmos é considerada complexa e de difícil aprendizado, desmotivando
+os estudantes, como já foi exposto no decorrer deste trabalho. Um jogo eletrônico pode
+estimular os alunos a conhecer melhor os conceitos de algoritmos de maneira atraente e
+divertida. Além disso, o estudante pode entender que, por meio do conhecimento de
+algoritmos é possível criar softwares que fazem parte do seu cotidiano, como os próprios
+jogos eletrônicos. Assim, paulatinamente, por meio do jogo pode ir construindo, de forma
+
+2 Acesso ao jogo pelo link: https://drive.google.com/open?id=0B6Dt4TZ31Xe9Wk14alpoWTVPMG8
+concreta, conhecimento fundamentado na disciplina de algoritmos.
+O objetivo deste trabalho, centralizou-se, em criar um protótipo de jogo para os
+estudantes dos cursos técnicos em informática utilizarem como recurso de aprendizagem
+de algoritmos, dando um maior enfoque na atratividade do jogo, sendo a aprendizagem
+de algoritmo um desafio a mais a ser superado para que o jogador possa concluir a fase e
+o jogo.
+Para o desenvolvimento do jogo foi utilizado práticas da metodologia Extreme
+Programming tornando a construção o trabalho mais produtivo e encurtando prazos de
+entregas. Foram realizadas 4 iterações com durações de uma semana e foram
+implementadas 4 estórias para finalizar a primeira fase do jogo proposto.
+A ferramenta utilizada foi a game engine Unity3D devido a ser um motor de jogos
+popular, com um ambiente de trabalho simples, sem a necessidade de criação de muitos
+códigos e fazendo uso da linguagem C#.
+As seguintes funcionalidades podem ser adicionadas ao jogo futuramente: fases
+com modelos diferentes de algoritmos e menus para facilitar a utilização do jogo pelo
+usuário.
+Após a implementação de mais fases do jogo, pretende-se realizar uma avaliação
+do impacto da utilização do jogo desenvolvido na aprendizagem e motivação dos
+estudantes dos cursos técnicos em informática.
+Referências
+CLEVI, Elena Rapkiewicz; FALKEMBACH, Gilse; SEIXAS, Louise; ROSA, Núbia dos
+Santos; CUNHA, Vanildes Vieira da; KLEMANN Miriam.Estratégias pedagógicas no
+ensino de algoritmos e programação associadas ao uso de jogos educacionais.
+KOEPP, Matthias J. et al. Evidence for striatal dopamine release during a video game.
+Nature, v. 393, n. 6682, p. 266-268, 1998..
+Game Designing. The 3 Best Video Game Engines. Disponível em:<
+http://www.gamedesigning.org/career/video-game-engines/>. Palavra chave: Unity
+Technologies Acesso em 21 abril 2016.
+J. A. Anguera; J. Boccanfuso; J. L. Rintoul; O. Al-Hashimi; F. Faraji, J. Janowich; E.
+Kong; Y. Larraburo, C. Rolle, E. Johnston & A. Gazzaley. Video game training
+enhaces cognitive control in older adults. Disponível em:
+<http://www.nature.com/nature/journal/v501/n7465/full/nature12486.html> Acesso
+em 19 janeiro 2016.
+RODRIGUES JUNIOR, M. C. Como Ensinar Programação? Informática – Boletim
+Informativo Ano I n° 01, ULBRA, Canoas, RS, 2002.
+TELES, Vinícius Manhães. Princípios do XP. 2006. Disponível em
+<http://www.desenvolvimentoagil.com.br/>. Acesso em 04 junho de 2016.

@@ -1,0 +1,400 @@
+XXXVI Congresso da Sociedade Brasileira de Computação
+1848
+Detecc¸ao do Molhamento Foliar por meio de ˜
+Analise de Imagens ´
+Mauricio A. Z. Karrei1, Renato W. Dallagasperina1, Thiago Benvegnu´ 1,
+Rafael Rieder1, Carlos A. Holbig ¨ 1, Jose Maur ´ ´icio C. Fernandes1, Willingthon Pavan1
+1Instituto de Ciencias Exatas e Geoci ˆ encias – Universidade de Passo Fundo (UPF) ˆ
+99.052-900 – Passo Fundo – RS – Brasil
+{122962, 71429, 105615, rieder, holbig, jmauricio, pavan}@upf.br
+
+Resumo. Este trabalho apresenta a implementac¸ao de um sistema capaz de de- ˜
+tectar o molhamento foliar. Por meio da utilizac¸ao de t ˜ ecnicas de an ´ alise e ´
+processamento de imagens digitais, buscou-se identificar e quantificar o molhamento
+foliar, bem como o tempo de durac¸ao deste. Al ˜ em disso, foi constru ´ ´ida
+uma rede de sensores sem fio capaz de coletar variaveis de temperatura, umi- ´
+dade relativa e precipitac¸ao. Testes preliminares comprovaram a viabilidade e ˜
+a eficiencia do sistema, destacando o uso de imagens NDVI para potencializar o ˆ
+processo de quantificac¸ao. Isso permitir ˜ a a correlac¸ ´ ao de informac¸ ˜ oes, visando ˜
+a obtenc¸ao de resultados com maior precis ˜ ao. ˜
+1. Introduc¸ao˜
+A produc¸ao de alimentos ˜ e um dos grandes desafios mundiais na atualidade, e a agri- ´
+cultura e pec¸a chave para a superac¸ ´ ao desses desafios. Desta forma, ˜ e de fundamental ´
+importancia a implementac¸ ˆ ao de novas tecnologias e ferramentas que otimizem o uso de ˜
+insumos agr´icolas e o manejo das culturas, contribuindo para a reduc¸ao dos impactos am- ˜
+bientais, aumento da produtividade e, consequentemente, aumentando a lucratividade do
+produtor [Greenwade 1993].
+A pratica da agricultura automatizada e baseada em sensores, faz parte da agri- ´
+cultura de precisao, e est ˜ a crescendo a cada dia, por ´ em, seu avanc¸o passa por quest ´ oes ˜
+como custo de implementac¸ao, resist ˜ encia dos equipamentos em ambientes agressivos, ˆ
+manutenc¸ao e fornecimento de energia aos dispositivos eletr ˜ onicos em locais de dif ˆ ´icil
+acesso [Rehman et al. 2014].
+A germinac¸ao e a esporulac¸ ˜ ao de fungos, bem como a infecc¸ ˜ ao das plantas, s ˜ ao˜
+diretamente afetadas por fatores como a temperatura e a umidade do ar, a ac¸ao do vento ˜
+e o molhamento foliar. Dentre estes parametros, o per ˆ ´iodo do molhamento foliar, que
+1849
+WCAMA - 7º Workshop de Computação Aplicada à Gestão do Meio Ambiente e Recursos Naturais
+Detecc¸ao do Molhamento Foliar por meio de ˜
+Analise de Imagens ´
+Mauricio A. Z. Karrei1, Renato W. Dallagasperina1, Thiago Benvegnu´ 1,
+Rafael Rieder1, Carlos A. Holbig ¨ 1, Jose Maur ´ ´icio C. Fernandes1, Willingthon Pavan1
+1Instituto de Ciencias Exatas e Geoci ˆ encias – Universidade de Passo Fundo (UPF) ˆ
+99.052-900 – Passo Fundo – RS – Brasil
+{122962, 71429, 105615, rieder, holbig, jmauricio, pavan}@upf.br
+Abstract. This paper presents the implementation of a leaf wetness detection
+system. Through the use of techniques for analysing and processing of digital
+images, we sought to identify and quantify the leaf wetness, as well as the leaf
+wetness duration. Moreover, a wireless sensor network was built to collect variables
+as temperature, relative humidity and precipitation. Preliminary tests
+demonstrated the viability and efficiency of the system, highlighting the use of
+NDVI images to enhance the quantification process. This will allow the correlation
+between the collected data in order to obtain results with higher accuracy.
+Resumo. Este trabalho apresenta a implementac¸ao de um sistema capaz de de- ˜
+tectar o molhamento foliar. Por meio da utilizac¸ao de t ˜ ecnicas de an ´ alise e ´
+processamento de imagens digitais, buscou-se identificar e quantificar o molhamento
+foliar, bem como o tempo de durac¸ao deste. Al ˜ em disso, foi constru ´ ´ida
+uma rede de sensores sem fio capaz de coletar variaveis de temperatura, umi- ´
+dade relativa e precipitac¸ao. Testes preliminares comprovaram a viabilidade e ˜
+a eficiencia do sistema, destacando o uso de imagens NDVI para potencializar o ˆ
+processo de quantificac¸ao. Isso permitir ˜ a a correlac¸ ´ ao de informac¸ ˜ oes, visando ˜
+a obtenc¸ao de resultados com maior precis ˜ ao. ˜
+1. Introduc¸ao˜
+A produc¸ao de alimentos ˜ e um dos grandes desafios mundiais na atualidade, e a agri- ´
+cultura e pec¸a chave para a superac¸ ´ ao desses desafios. Desta forma, ˜ e de fundamental ´
+importancia a implementac¸ ˆ ao de novas tecnologias e ferramentas que otimizem o uso de ˜
+insumos agr´icolas e o manejo das culturas, contribuindo para a reduc¸ao dos impactos am- ˜
+bientais, aumento da produtividade e, consequentemente, aumentando a lucratividade do
+produtor [Greenwade 1993].
+A pratica da agricultura automatizada e baseada em sensores, faz parte da agri- ´
+cultura de precisao, e est ˜ a crescendo a cada dia, por ´ em, seu avanc¸o passa por quest ´ oes ˜
+como custo de implementac¸ao, resist ˜ encia dos equipamentos em ambientes agressivos, ˆ
+manutenc¸ao e fornecimento de energia aos dispositivos eletr ˜ onicos em locais de dif ˆ ´icil
+acesso [Rehman et al. 2014].
+A germinac¸ao e a esporulac¸ ˜ ao de fungos, bem como a infecc¸ ˜ ao das plantas, s ˜ ao˜
+diretamente afetadas por fatores como a temperatura e a umidade do ar, a ac¸ao do vento ˜
+e o molhamento foliar. Dentre estes parametros, o per ˆ ´iodo do molhamento foliar, que
+pode ser causado pela chuva, neblina, irrigac¸ao ou orvalho [Sentelhas et al. 2008], ˜ e um ´
+dos que mais impactam na relac¸ao entre o fungo e a planta, tornando esse um par ˜ ametro ˆ
+de grande importancia em modelos de simulac¸ ˆ ao de doenc¸as de plantas. Existem mui- ˜
+tas formas de se realizar esta detecc¸ao, por ˜ em, algumas s ´ ao falhas e outras s ˜ ao caras, ˜
+alem de existirem lacunas com relac¸ ´ ao a quantificac¸ ˜ ao e normalizac¸ ˜ ao dos dados coleta- ˜
+dos [Rowlandson et al. 2015].
+Nos ultimos anos foram desenvolvidas diversas tecnologias na busca pelo monito- ´
+ramento da durac¸ao do molhamento foliar (DMF) nas mais diferentes culturas [ ˜ ?]. Apesar
+dos resultados se mostrarem positivos, ainda ha barreiras a serem superadas para ampliar ´
+a utilizac¸ao deste artif ˜ ´icio. Partindo do princ´ipio de que um dos metodos mais utilizados e ´
+confiaveis para a determinac¸ ´ ao da DMF ˜ e a observac¸ ´ ao humana, ˜ e poss ´ ´ivel considerar que
+a visao computacional, por ser um m ˜ etodo semelhante, ´ e uma possibilidade interessante ´
+a ser explorada.
+Entre os diversos dispositivos existentes no mercado, e poss ´ ´ivel destacar os sensores
+eletronicos, que s ˆ ao amplamente utilizados. Estes sensores, simulam a folha e s ˜ ao ca- ˜
+pazes de detectar a presenc¸a de agua em sua superf ´ ´icie, podendo ser resistivos [Inc. 2010]
+ou capacitivos [Devices 2010]. A implementac¸ao de sensores de umidade e temperatura, ˜
+que possibilitam estimar o molhamento foliar por meio de modelos emp´iricos, tambem´
+apresenta-se como uma das formas mais viaveis para a determinac¸ ´ ao da durac¸ ˜ ao do mo- ˜
+lhamento foliar [Durigon and van Lier 2013, Leandro et al. 2003].
+Estas tecnologias costumam ser suscet´iveis a variac¸oes, de acordo com o tipo de ˜
+planta analisado e as condic¸oes clim ˜ aticas do local em que est ´ ao instalados. Os sensores ˜
+de molhamento exigem cuidados como angulo de instalac¸ ˆ ao, posicionamento e diferenc¸a ˜
+das caracter´isticas termodinamicas entre as superf ˆ ´icies do sensor e da folha, enquanto os
+modelos emp´iricos necessitam de calibrac¸ao e ajustes nos limiares de par ˜ ametros de inte- ˆ
+resse de acordo com as caracter´isticas do local de analise e a esp ´ ecie de planta monitorada ´
+[Rowlandson 2011].
+Nos ultimos anos foram desenvolvidas diversas tecnologias na busca pelo moni- ´
+toramento do molhamento foliar nas mais diferentes culturas [Sentelhas 2004]. Apesar
+dos resultados se mostrarem positivos, ainda existem barreiras a serem superadas para
+ampliar a utilizac¸ao deste artif ˜ ´icio. Partindo do princ´ipio de que um dos metodos mais ´
+utilizados e confiaveis para a determinac¸ ´ ao do molhamento foliar ˜ e a observac¸ ´ ao humana, ˜
+e poss ´ ´ivel considerar que a visao computacional, por ser um m ˜ etodo semelhante, ´ e uma ´
+possibilidade que deve ser explorada.
+Devido aos constantes avanc¸os tecnologicos, a captura e processamento remoto ´
+de imagens esta se tornando cada vez mais acess ´ ´ivel. O processamento de imagens apresenta
+vantagens em relac¸ao ao uso de sensores convencionais, como por exemplo o ar- ˜
+mazenamento das imagens capturadas para posterior analise e validac¸ ´ ao dos resultados, ˜
+aumentando a confiabilidade nos dados gerados.
+Assim, diante das informac¸oes expostas, ˜ e plaus ´ ´ivel considerar que o desenvolvimento
+de um sistema capaz de coletar imagens e variaveis ambientais, utilizando o ´
+processamento destas imagens e informac¸oes para determinar a presenc¸a de molhamento ˜
+foliar oferece diversos benef´icios a profissionais da area agr ´ ´icola. Com isso, o objetivo
+deste trabalho e apresentar o desenvolvimento de um sensor capaz de detectar o molha- ´
+XXXVI Congresso da Sociedade Brasileira de Computação
+1850
+mento foliar por meio de analise de imagens, al ´ em de uma rede de sensores sem fio de ´
+baixo custo, com o intuito de auxiliar no manejo de doenc¸as de plantas.
+2. Material e Metodos ´
+Nesta sessao s ˜ ao abordados os conceitos fundamentais para a plena compreens ˜ ao do pro- ˜
+jeto. Sao apresentadas as ferramentas de hardware utilizadas, bem como as bibliotecas de ˜
+software que compuseram o desenvolvimento da soluc¸ao. ˜
+2.1. Estrutura Geral do Sistema
+Como pec¸a principal para a realizac¸ao deste trabalho, foi utilizado a placa de desenvolvi- ˜
+mento Intel Galileo Gen2 (Figura 1(a)). Esta placa, e respons ´ avel por realizar as tarefas ´
+de coleta e processamento de imagens, bem como a aquisic¸ao dos dados provenientes da ˜
+Rede de Sensores Sem Fio (Sec¸ao 2.4). ˜
+Para a captura das imagens utilizadas na identificac¸ao do molhamento foliar, ˜ e´
+utilizada uma camera com comunicac¸ ˆ ao USB (Figura 1(d)), escolhida por sua compatibi- ˜
+lidade com a placa Galileo.
+Figura 1. Diagrama em blocos do sistema proposto.
+2.2. Captura de imagens
+Para a realizac¸ao da coleta das imagens, a c ˜ amera USB conectada ˆ a Galileo ` e ativada ´
+sempre que os dados coletados pela rede de sensores (Sec¸ao 2.4) indicam a probabilidade ˜
+de existencia do molhamento foliar. ˆ
+1851
+WCAMA - 7º Workshop de Computação Aplicada à Gestão do Meio Ambiente e Recursos Naturais
+O ambiente onde as imagens sao capturadas, influ ˜ encia diretamente no resul- ˆ
+tado do processamento digital destas. Muitas sao as vari ˜ aveis presentes no ambiente ´
+com potencial de interferencia sobre o processo, algumas das quais podem ser citadas: ˆ
+iluminac¸ao, reflexo, cores de fundo, presenc¸a de movimento, ˜ angulo da captura da ima- ˆ
+gem, entre outros. Para testes e validac¸ao inicial do sistema foi desenvolvido um ambiente ˜
+controlado para minimizar a influencia de algumas destas vari ˆ aveis. Na Figura 2 ´ e exibido ´
+o ambiente controlado constru´ido.
+Figura 2. Ambiente controlado constru´ido para captura de imagens.
+2.3. Superf´icie Alternativa
+O ambiente natural possui grande influencia sobre o resultado do processamento das ima- ˆ
+gens. Dessa forma, para eliminar o ru´ido causado pelo movimento da folha e pelos ru´idos
+de fundo da imagem buscou-se uma superf´icie alternativa a folha da planta. Esta su- `
+perf´icie deveria ser fixa, ser capaz de acumular agua e ser suficientemente robusta para ´
+suportar condic¸oes adversas. Neste projeto, utilizou-se como superf ˜ ´icie alternativa um
+fragmento de vidro jateado, onde sua opacidade com superf´icie seca, permite uma leitura
+mais proxima da cor branca, e no instante que a superf ´ ´icie possui acumulo de ´ agua, o ´
+vidro jateado apresenta maior transparencia. ˆ
+Dessa forma, utilizou-se um material de cor preta colocado sob o vidro jateado.
+Assim, no momento em que ocorrer a presenc¸a de agua livre sobre a superf ´ ´icie do vidro
+jateado, tornara vis ´ ´ivel o material posicionado sob o vidro. Caso a superf´icie do vidro
+nao contenha ˜ agua, a cor preta n ´ ao ter ˜ a tanto destaque e consequentemente n ´ ao ser ˜ a iden- ´
+tificada durante o processamento da imagem. Na Figura 3 e apresentado um fragmento ´
+do vidro utilizado. Nota-se que ha um maior destaque da cor preta apenas na regi ´ ao com ˜
+concentrac¸ao de ˜ agua. ´
+2.4. Rede de Sensores sem Fio
+Todos os nodos da rede de sensores sem fio possuem hardware identico, diferenciando- ˆ
+se apenas pela func¸ao exercida e pelo firmware embarcado. O nodo coordenador (Fi- ˜
+gura 1(b)) e respons ´ avel pelo recebimento dos dados coletados pelos demais nodos da ´
+XXXVI Congresso da Sociedade Brasileira de Computação
+1852
+Figura 3. Superf´icie do vidro jateado, ressaltando a area molhada. ´
+rede (Figura 1(b)), e transmissao destes dados para a Galileo. Cada nodo da rede possu ˜ ´i
+sensores de temperatura e umidade relativa do ar.
+Para a coleta de dados e tambem para aumentar a ´ area de abrang ´ encia do sistema, ˆ
+foi desenvolvida uma rede de sensores sem fio. Todos os nodos sao alimentados por ˜
+baterias e celulas fotovoltaicas, garantindo sua autonomia energ ´ etica. A rede utiliza a to- ´
+pologia estrela, sendo o nodo coordenador instalado junto a Galileo. O nodo coordenador
+possui, alem do sensor de temperatura e umidade relativa do ar um sensor de precipitac¸ ´ ao. ˜
+2.5. Plataforma de recebimento de dados
+Weather Underground ou Wunderground e um concentrador e fornecedor de dados mete- ´
+orologicos, formado principalmente por estac¸ ´ oes meteorol ˜ ogicas particulares. Qualquer ´
+pessoa ou instituic¸ao pode enviar os dados coletados, em tempo real, para o Wunder- ˜
+ground. Segundo informac¸oes do pr ˜ oprio servic¸o, atualmente, somente nos Estados Uni- ´
+dos existem mais de cem mil estac¸oes enviando informac¸ ˜ oes, sendo mais de oitenta mil ˜
+particulares, de ”hobbystas”ou entusiastas da area. ´
+Assim, uma alternativa para disponibilizar as informac¸oes coletadas por este pro- ˜
+jeto ao publico foi a utilizac¸ ´ ao dos servic¸os oferecidos pelo Wunderground. ˜
+E utilizado um m ´ odulo GPRS, Figura 1(g), para o envio dos dados coletados ´ a uma `
+plataforma responsavel pelo armazenamento, processamento e tratamento destes dados, ´
+tambem pode ser utilizado para enviar alertas via SMS. A plataforma usada para rece- ´
+ber e disponibilizar os dados coletados ao publico e a Weather Underground [und 2015], ´
+Figura 1(h). E ainda, todos os dados e imagens coletados sao armazenados em um SD ˜
+Card, Figura 1(f), ficando dispon´iveis para acesso quando necessario. A Figura 1 mostra ´
+o diagrama completo do sistema desenvolvido.
+1853
+WCAMA - 7º Workshop de Computação Aplicada à Gestão do Meio Ambiente e Recursos Naturais
+2.6. OpenCV
+O processo de identificac¸ao do molhamento foliar, deu-se por meio da captura e proces- ˜
+samento de imagens, utilizando-se de uma camera USB conectada ˆ a plataforma Galileo. `
+No que se refere ao metodo de an ´ alise e identificac¸ ´ ao da presenc¸a de ˜ agua na estrutura ´
+montada (vidro jateado), foram realizados testes utilizando a biblioteca OpenCV.
+Open Source Computer Vision Library (OpenCV) e uma biblioteca c ´ odigo fonte ´
+aberto que possui um conjunto de func¸oes e recursos, possibilitando a construc¸ ˜ ao de ˜
+softwares de visao computacional. Nesta biblioteca est ˜ ao inclu ˜ ´idos um conjunto de algoritmos
+otimizados, que podem ser utilizados em aplicac¸oes de detecc¸ ˜ ao e reconhecimento ˜
+de faces/objetos e manipulac¸ao de imagens, tanto em 2D como em 3D [Cunha 2013]. ˜
+O software foi implementado utilizando a linguagem de programac¸ao˜ Python e o
+seu modulo ”cv2”, o qual ´ e carregado com a utilizac¸ ´ ao do pacote ”python-opencv”. Do ˜
+modulo ”cv2”, foram utilizadas as func¸ ´ oes ˜ VideoCapture e inRange para a manipulac¸ao˜
+das imagens. A primeira consiste em uma func¸ao respons ˜ avel por realizar o interfacea- ´
+mento do software desenvolvido com a camera conectada ˆ a Galileo, oferecendo recursos `
+para a captura da imagem da camera. J ˆ a na func¸ ´ ao˜ inRange, estao dispon ˜ ´iveis os recursos
+necessarios para analisar as imagens capturadas. ´
+2.7. Armazenamento dos Dados Coletados
+As informac¸oes provindas dos sensores de umidade relativa do ar, temperatura, ˜
+precipitac¸ao, molhamento foliar, resultado do processamento da imagem e hor ˜ ario da ´
+coleta sao transmitidas ao concentrador, e este, por sua vez, envia os dados para a Web ˜
+por meio de uma conexao GPRS/3G ou por meio de uma conex ˜ ao ethernet. ˜
+As imagens capturadas pelo sistema, alem de serem processadas e analisadas, ´
+tambem s ´ ao armazenadas em um cart ˜ ao SD juntamente com os dados capturados pelos ˜
+sensores, assim como informac¸oes do hor ˜ ario da coleta. Desta forma, quando necess ´ ario, ´
+o usuario pode acessar todas as informac¸ ´ oes diretamente do cart ˜ ao SD. ˜
+3. Resultados
+3.1. Rede de Sensores sem Fio
+Os prototipos dos nodos da rede foram projetados e montados visando baixo custo e ´
+baixo consumo. Todos os nodos possuem hardware identico, diferenciando-se apenas ˆ
+pelo firmware embarcado. Para minimizar o consumo de energia, o sistema opera de
+forma que o nodo coordenador se mantem em modo de recepc¸ ´ ao constantemente, en- ˜
+quanto os demais nodos operam em modo sleep, despertando apenas para a coleta e envio
+de dados.
+O sensor de temperatura e umidade relativa do ar precisou ser acomodado em
+uma estrutura especial, onde nao ficasse exposto diretamente a luz solar, evitando que ˜
+esta altere o valor lido pelo sensor. Na Figura 4 e apresentado o prot ´ otipo de um nodo da ´
+rede, com toda a estrutura necessaria. ´
+XXXVI Congresso da Sociedade Brasileira de Computação
+1854
+Figura 4. Nodo da rede contendo todos os componentes utilizados.
+3.2. Interpretac¸ao de Imagens ˜
+3.2.1. Detecc¸ao de Bordas ˜
+Inicialmente, realizaram-se testes utilizando tecnicas de processamento de imagens para ´
+detecc¸ao de bordas, utilizando o m ˜ etodo ´ Canny Edge Detector da biblioteca OpenCv. O
+objetivo deste processo foi capturar a formac¸ao de ˜ agua nas folhagens de plantas a partir ´
+da identificac¸ao do formato de sua borda na superf ˜ ´icie da folha.
+O uso desta tecnica foi descartada para utilizac¸ ´ ao neste projeto, visto que n ˜ ao˜
+apresentou bons resultados para a detecc¸ao da borda da gota d’ ˜ agua na superf ´ ´icie da folha.
+Devido a aspectos naturais do formato das folhas das plantas e tambem devido ao n ´ ´ivel
+de transparencia da ˆ agua, nota-se que ap ´ os a aplicac¸ ´ ao dos filtros de detecc¸ ˜ ao de borda, ˜
+o n´ivel de falsa detecc¸ao obteve grande proporc¸ ˜ ao. A Figura 5 apresenta o resultado da ˜
+aplicac¸ao da t ˜ ecnica de detecc¸ ´ ao de borda. ˜
+Figura 5. Identificac¸ao de formac¸ ˜ ao de got´iculas d’ ˜ agua utilizando t ´ ecnicas de ´
+detecc¸ao de bordas. ˜
+3.2.2. Detecc¸ao de intervalos de cores ˜
+Em razao da dificuldade em realizar a detecc¸ ˜ ao de ˜ agua por meio da t ´ ecnica de detecc¸ ´ ao de ˜
+bordas, optou-se por utilizar a tecnica de filtragem de cores. Para isso, a partir da obtenc¸ ´ ao˜
+da imagem da camera USB no formato RGB, esta ˆ e convertida para o formato HSV com o ´
+aux´ilio da func¸ao da biblioteca OpenCV ˜ cvtColor. Esta conversao permite que os frames ˜
+coletados sejam aplicados na func¸ao˜ inRange, a qual recebe como parametro tr ˆ es valores: ˆ
+1) frame coletado (imagem no formato HSV) e realiza o thresholding na imagem; 2)
+array com o intervalo baixo de cores (menor tonalidade da cor preta) a serem filtradas
+1855
+WCAMA - 7º Workshop de Computação Aplicada à Gestão do Meio Ambiente e Recursos Naturais
+Figura 4. Nodo da rede contendo todos os componentes utilizados.
+3.2. Interpretac¸ao de Imagens ˜
+3.2.1. Detecc¸ao de Bordas ˜
+Inicialmente, realizaram-se testes utilizando tecnicas de processamento de imagens para ´
+detecc¸ao de bordas, utilizando o m ˜ etodo ´ Canny Edge Detector da biblioteca OpenCv. O
+objetivo deste processo foi capturar a formac¸ao de ˜ agua nas folhagens de plantas a partir ´
+da identificac¸ao do formato de sua borda na superf ˜ ´icie da folha.
+O uso desta tecnica foi descartada para utilizac¸ ´ ao neste projeto, visto que n ˜ ao˜
+apresentou bons resultados para a detecc¸ao da borda da gota d’ ˜ agua na superf ´ ´icie da folha.
+Devido a aspectos naturais do formato das folhas das plantas e tambem devido ao n ´ ´ivel
+de transparencia da ˆ agua, nota-se que ap ´ os a aplicac¸ ´ ao dos filtros de detecc¸ ˜ ao de borda, ˜
+o n´ivel de falsa detecc¸ao obteve grande proporc¸ ˜ ao. A Figura 5 apresenta o resultado da ˜
+aplicac¸ao da t ˜ ecnica de detecc¸ ´ ao de borda. ˜
+Figura 5. Identificac¸ao de formac¸ ˜ ao de got´iculas d’ ˜ agua utilizando t ´ ecnicas de ´
+detecc¸ao de bordas. ˜
+3.2.2. Detecc¸ao de intervalos de cores ˜
+Em razao da dificuldade em realizar a detecc¸ ˜ ao de ˜ agua por meio da t ´ ecnica de detecc¸ ´ ao de ˜
+bordas, optou-se por utilizar a tecnica de filtragem de cores. Para isso, a partir da obtenc¸ ´ ao˜
+da imagem da camera USB no formato RGB, esta ˆ e convertida para o formato HSV com o ´
+aux´ilio da func¸ao da biblioteca OpenCV ˜ cvtColor. Esta conversao permite que os frames ˜
+coletados sejam aplicados na func¸ao˜ inRange, a qual recebe como parametro tr ˆ es valores: ˆ
+1) frame coletado (imagem no formato HSV) e realiza o thresholding na imagem; 2)
+array com o intervalo baixo de cores (menor tonalidade da cor preta) a serem filtradas
+na imagem; e 3) array contendo o intervalo maximo de cores (maior tonalidade da cor ´
+preta) a serem filtradas na imagem. O retorno desta func¸ao˜ e uma imagem contendo a ´
+identificac¸ao dos pixels que cont ˜ em a cor preta e tamb ´ em dos pixels que n ´ ao cont ˜ em a cor ´
+preta.
+Este metodo de an ´ alise apresentou maior efic ´ acia em comparac¸ ´ ao com o m ˜ etodo ´
+de detecc¸ao de bordas, visto que as interfer ˜ encias na superf ˆ ´icie da folha da planta, encontradas
+no primeiro metodo, ficaram inexistentes neste segundo m ´ etodo. Em consequ ´ encia ˆ
+disso, foi poss´ivel identificar a presenc¸a de agua na superf ´ ´icie do vidro, visto que no
+caso de existencia de ˆ agua, o vidro perde sua opacidade e ganha com um aspecto ”trans- ´
+parente”, tornando vis´ivel a cor preta que se encontra por detras do vidro, permitindo ´
+assim, tornar viavel a identificac¸ ´ ao de ˜ agua sobre a superf ´ ´icie do vidro jateado. Esta
+identificac¸ao, ˜ e apresentada na Figura 6. ´
+Figura 6. Processo de identificac¸ao da concentrac¸ ˜ ao de ˜ agua no vidro jateado. ´
+Alem do exposto, o software desenvolvido realiza a quantificac¸ ´ ao de pixels, sendo ˜
+poss´ivel, dessa forma, quantificar os pixels que sao formados pela cor preta e os pixels ˜
+formados por cores diferentes de preto.
+3.3. Transmissao de dados ˜
+Para a transmissao dos dados coletados foram utilizados dois meios de comunicac¸ ˜ ao: ˜
+um via GPRS (telefonia movel) e outro por meio de uma conex ´ ao Ethernet, sendo que ˜
+ambos se mostraram eficazes. Os dados foram transmitidos para a plataforma Weather
+Underground [und 2015].
+4. Discussoes e Conclus ˜ oes ˜
+A partir dos resultados apresentados, percebe-se que a identificac¸ao de molhamento foliar ˜
+por meio de analise de imagens pode ser realizada. A superf ´ ´icie do vidro jateado, para
+esta situac¸ao, foi utilizada como alternativa ˜ a folha da planta e apresentou bons resultados. `
+Com a realizac¸ao dos experimentos, constatou-se que fatores externos como in- ˜
+tensidade de iluminac¸ao, ˜ angulo da c ˆ amera e dist ˆ ancia da c ˆ amera exercem forte influ ˆ encia ˆ
+sobre o funcionamento do sistema. Para tanto, nota-se que e preciso, primeiramente, do- ´
+minar esses fatores em um ambiente controlado, para posterior aplicac¸ao e ajustes em ˜
+ambiente aberto.
+A quantificac¸ao do molhamento foliar por meio do processamento de imagens ˜
+mostrou-se viavel e eficiente. Al ´ em dos resultados obtidos, um novo trabalho est ´ a sendo ´
+XXXVI Congresso da Sociedade Brasileira de Computação
+1856
+realizado, adaptando-se a camara para funcionar com um filtro NDVI ( ˆ Normalized Difference
+Vegetation Index [INSA 2008]). A Figura 7 apresenta alguns resultados preliminares
+obtidos utilizando-se o metodo do NDVI. Pode-se observar que a ´ area das folhas ´
+da planta que possuem acumulo de ´ agua ficaram destacadas em um tom de verde. As ´
+areas onde existe ac ´ umulo de ´ agua, mas n ´ ao est ˜ ao sobre a superf ˜ ´icie das folhas da planta,
+obtiveram uma colorac¸ao na tonalidade azul. Al ˜ em disso, nota-se que as ´ areas das folhas ´
+da planta onde nao existe ac ˜ umulo de ´ agua, a cor vermelha e/ou amarela prevaleceu. ´
+Este metodo tamb ´ em apresenta potencialidade de utilizac¸ ´ ao para a identificac¸ ˜ ao e ˜
+quantificac¸ao do molhamento foliar. Com isso, destaca-se como fator positivo, a possibi- ˜
+lidade da identificac¸ao da presenc¸a de ˜ agua na superf ´ ´icie das plantas sendo feita diretamente
+no ambiente real, sem a utilizac¸ao superf ˜ ´icies alternativas a folha das plantas.
+Figura 7. Imagens capturadas utilizando filtro NDVI.
+Com o desenvolvimento deste trabalho, uma nova forma de identificar e quantificar
+o molhamento foliar foi determinada. Os resultados indicam que o uso do processamento
+digital de imagens e uma alternativa vi ´ avel aos sensores de molhamento foliar pre- ´
+sentes no mercado atualmente. Alem disso, a utilizac¸ ´ ao da rede de sensores sem fio per- ˜
+mite extrair diferentes variaveis do ambiente, possibilitando a correlac¸ ´ ao de informac¸ ˜ oes ˜
+(como umidade do ar) a fins de validar e garantir maior precisao para a detecc¸ ˜ ao do mo- ˜
+lhamento foliar.
+Referencias ˆ
+(2015). Weather underground.
+Cunha, A. L. B. N. d. (2013). Sistema automatico para obtenc¸ ´ ao de par ˜ ametros do tr ˆ afego ´
+veicular a partir de imagens de v´ideo usando OpenCV. PhD thesis, Universidade de
+Sao Paulo. ˜
+Devices, D. (2010). Leaf wetness dielectric sensor. Technical report.
+Durigon, A. and van Lier, Q. (2013). Durac¸ao do per ˜ ´iodo de molhamento foliar: Medic¸ao˜
+e estimativa em feijao sob diferentes tratamentos h ˜ ´idricos. Rev Bras Eng Agric Ambient,
+17:200–207.
+Greenwade, G. D. (1993). The Comprehensive Tex Archive Network (CTAN). TUGBoat,
+14(3):342–351.
+1857
+WCAMA - 7º Workshop de Computação Aplicada à Gestão do Meio Ambiente e Recursos Naturais
+realizado, adaptando-se a camara para funcionar com um filtro NDVI ( ˆ Normalized Difference
+Vegetation Index [INSA 2008]). A Figura 7 apresenta alguns resultados preliminares
+obtidos utilizando-se o metodo do NDVI. Pode-se observar que a ´ area das folhas ´
+da planta que possuem acumulo de ´ agua ficaram destacadas em um tom de verde. As ´
+areas onde existe ac ´ umulo de ´ agua, mas n ´ ao est ˜ ao sobre a superf ˜ ´icie das folhas da planta,
+obtiveram uma colorac¸ao na tonalidade azul. Al ˜ em disso, nota-se que as ´ areas das folhas ´
+da planta onde nao existe ac ˜ umulo de ´ agua, a cor vermelha e/ou amarela prevaleceu. ´
+Este metodo tamb ´ em apresenta potencialidade de utilizac¸ ´ ao para a identificac¸ ˜ ao e ˜
+quantificac¸ao do molhamento foliar. Com isso, destaca-se como fator positivo, a possibi- ˜
+lidade da identificac¸ao da presenc¸a de ˜ agua na superf ´ ´icie das plantas sendo feita diretamente
+no ambiente real, sem a utilizac¸ao superf ˜ ´icies alternativas a folha das plantas.
+Figura 7. Imagens capturadas utilizando filtro NDVI.
+Com o desenvolvimento deste trabalho, uma nova forma de identificar e quantificar
+o molhamento foliar foi determinada. Os resultados indicam que o uso do processamento
+digital de imagens e uma alternativa vi ´ avel aos sensores de molhamento foliar pre- ´
+sentes no mercado atualmente. Alem disso, a utilizac¸ ´ ao da rede de sensores sem fio per- ˜
+mite extrair diferentes variaveis do ambiente, possibilitando a correlac¸ ´ ao de informac¸ ˜ oes ˜
+(como umidade do ar) a fins de validar e garantir maior precisao para a detecc¸ ˜ ao do mo- ˜
+lhamento foliar.
+Referencias ˆ
+(2015). Weather underground.
+Cunha, A. L. B. N. d. (2013). Sistema automatico para obtenc¸ ´ ao de par ˜ ametros do tr ˆ afego ´
+veicular a partir de imagens de v´ideo usando OpenCV. PhD thesis, Universidade de
+Sao Paulo. ˜
+Devices, D. (2010). Leaf wetness dielectric sensor. Technical report.
+Durigon, A. and van Lier, Q. (2013). Durac¸ao do per ˜ ´iodo de molhamento foliar: Medic¸ao˜
+e estimativa em feijao sob diferentes tratamentos h ˜ ´idricos. Rev Bras Eng Agric Ambient,
+17:200–207.
+Greenwade, G. D. (1993). The Comprehensive Tex Archive Network (CTAN). TUGBoat,
+14(3):342–351.
+Inc., C. S. (2010). Model 237 leaf wetness sensor. Technical report.
+INSA, I. N. d. S. (2008). ´Indice de vegetac¸ao por diferenc¸a normalizada. ˜
+Leandro, L., Gleason, M., Nutter Jr, F., Wegulo, S., and Dixon, P. (2003). Influence of
+temperature and wetness duration on conidia and appressoria of colletotrichum acutatum
+on symptomless strawberry leaves. Phytopathology, 93(4):513–520.
+Rehman, A., Abbasi, A. Z., Zubair, N. I., and Shaikh, A. (2014). A review of wireless
+sensors and networks applications in agriculture. Computer Standards and Interfaces,
+36:263–270.
+Rowlandson, T., Gleason, M., Sentelhas, P., Gillespie, T., Thomas, C., and Hornbuckle,
+B. (2015). Reconsidering leaf wetness duration determination for plant disease management.
+Plant Disease, 99(3):310–319.
+Rowlandson, T. L. (2011). Leaf wetness: implications for agriculture and remote sensing.
+Sentelhas, P. C. (2004). Durac¸ao do per ˜ ´iodo de molhamento foliar: aspectos operacionais
+da sua medida, variabilidade espacial em diferentes culturas e sua estimativa a partir
+do modelo de penman-monteith. Piracicaba: ESALQ/USP (Tese de Livre-Docencia) ˆ .
+Sentelhas, P. C., Marta, A. D., Orlandini, S., Santos, E. A., Gillespie, T. J., and Gleason,
+M. L. (2008). Suitability of relative humidity as an estimator of leaf wetness duration.
+Agricultural and forest meteorology, 148:392–400.

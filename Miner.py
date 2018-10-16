@@ -22,7 +22,7 @@ class Miner():
     def search(self, tags=[], words=[]):
         if (tags == [] and words == []):
             raise ValueError('You must search for a tag or a word, or both.')
-            
+
         df = next(self.readDataframe())
         
         if (tags == []):
@@ -40,6 +40,7 @@ class Miner():
         df = pd.read_csv('./minerMid.csv', sep=',', header=0)
         df['count'] = df.groupby(['PALAVRA', 'TAG'])['PALAVRA'].transform('count')
         df.drop_duplicates(inplace=True)
+        ''' ALGORITMO QUICKSORT '''
         df.sort_values(by=['count'], ascending=False , inplace=True, kind='quicksort')
         return df
     

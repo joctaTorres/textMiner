@@ -1,0 +1,50 @@
+UP4EG: Um Perfil UML para Modelagem de Jogos
+Educacionais Digitais
+Lucas Rodrigues de Oliveira (autor)1
+, Paulo A. Parreira Júnior (orientador)2
+1
+Instituto de Ciências Exatas - Universidade Federal de Goiás - Regional Jataí – Caixa
+Postal 03 – 75801-615 – Jataí-GO – Brasil
+2 Departamento de Ciência da Computação - Universidade Federal de Lavras
+Caixa Postal 3.037 – 37.200-000 – Lavras – MG – Brasil
+lukimrodrigues@gmail.com@gmail.com, pauloa.junior@dcc.ufla.br
+Resumo. UML (Unified Modeling Language) é uma linguagem de propósito geral para
+modelagem de software. Sendo assim, apenas os elementos pré-existentes nessa
+linguagem podem não ser suficientes para facilitar a identificação e o entendimento dos
+conceitos de domínios de software mais específicos. Um exemplo de domínio de
+software bastante específico é o de JEDs (Jogos Educacionais Digitais). Uma
+modelagem tradicional, apenas com os elementos básicos da UML, pode não ser
+suficiente para representar tal domínio de forma clara. Isso faz com que possam surgir
+algumas dúvidas durante a modelagem, o entendimento e a manutenção de um JED, tais
+como: (i) quais elementos do jogo referem-se à identidade do jogador? (ii) em quais
+componentes estão encapsuladas as fases do jogo? (iii) em quais classes se encontram os
+desafios? entre outros. Uma das alternativas propostas para contornar essa limitação é
+estender a UML por meio de um conjunto de mecanismos incluídos dentro de perfis
+UML [OMG, 2014].Neste trabalho, tem-se como hipótese que a identificação e
+entendimento dos principais elementos de um JED podem ser facilitados por meio da
+utilização de um perfil UML específico para esse domínio. Sendo assim, desenvolveu-se
+um perfil UML, denominado UP4EG (UML Profile for Educational Games), composto
+de trinta e um elementos de modelagem, confeccionados com base na descrição dos
+principais elementos de um JED, proposta por Anneta (2010), bem como na modelagem
+de trinta e quatro jogos educacionais disponíveis na literatura e em repositórios de
+software livre. O perfil UP4EG foi avaliado por meio de um estudo experimental, cujo
+intuito foi comparar a quantidade de erros e o tempo gasto para identificação dos
+principais elementos de um JED utilizando o UP4EG e outro perfil para modelagem de
+JEDs. Como resultados, percebeu-se que a quantidade de erros e o tempo gasto para
+identificação dos principais elementos de um JED podem ser significativamente
+melhorados, quando esse perfil é usado nos modelos de classes desse tipo de software. É
+importante ressaltar que esse artigo foi aceito para publicação no XXVII Simpósio
+Brasileiro de Informática na Educação (SBIE) [Oliveira et al., 2016].
+Referências
+Anneta, L. A. The “I’s” Have It: A Framework for Serious Educational Game Design. American
+Psychological Association. 2010.
+Lisboa Filho, J. et al. (2010). A UML profile for conceptual modeling in GIS domain. DE@CAISE’2010,
+p.18-31.
+Oliveira, L. R; Inocêncio, A. C. G.; Costa, H.; Parreira Júnior, P. A. “UP4EG: Um Perfil UML para
+Modelagem de Jogos Educacionais Digitais”. In: Anais do XXVII Simpósio Brasileiro de Informática
+na Educação (SBIE). Uberlândia/MG. 2016.
+Object Management Group (OMG). Meta Object Facility (MOF) Core Specification. Disponível:
+http://www.omg.org/spec/MOF/2.4.2/PDF. Documento: formal/2014-04-03.
+DOI: 10.5753/cbie.wcbie.2016.91 91
+Anais dos Workshops do V Congresso Brasileiro de Informática na Educação (CBIE 2016)
+V Congresso Brasileiro de Informática na Educação (CBIE 2016)

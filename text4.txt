@@ -1,0 +1,589 @@
+XXXVI Congresso da Sociedade Brasileira de Computação
+1046
+Lotus@Runtime: Uma Ferramenta para Monitoramento e
+Verificac¸ao em Tempo de Execuc¸ ˜ ao para Sistemas ˜
+Autoadaptativos
+Davi Monteiro Barbosa1, Paulo Henrique Mendes Maia1, Evilasio Costa J ´ unior ´ 1
+1Universidade Estadual do Ceara (UECE) ´
+Centro de Ciencias e Tecnologia - CCT ˆ
+Av. Dr. Silas Munguba, 1700, Campus do Itaperi – Fortaleza – CE
+davi.monteiro@aluno.uece.br, pauloh.maia@uece.br, junior.facanha@gmail.com
+
+Resumo. Sistemas autoadaptativos possuem a capacidade de adaptar seu comportamento
+durante sua execuc¸ao em resposta ˜ as mudanc¸as no ambiente onde `
+esta inserido. Para garantir o sucesso de uma adaptac¸ ´ ao, abordagens tradicio- ˜
+nais como testes e verificac¸oes de software s ˜ ao insuficientes. Por isso, deve-se ˜
+adotar abordagens de monitoramento e verificac¸ao em tempo de execuc¸ ˜ ao para ˜
+assegurar que as adaptac¸oes tenham o resultado esperado. Neste trabalho, ˜ e´
+proposta uma ferramenta para realizar, de forma integrada, o monitoramento,
+a verificac¸ao e a notificac¸ ˜ ao de violac¸ ˜ oes encontradas durante a execuc¸ ˜ ao de ˜
+um sistema autoadaptativo.
+1. Introduc¸ao˜
+O crescimento da complexidade de sistemas, junto com o custo para mante-los ap ˆ os o ´
+seu desenvolvimento, foram fatores apontados por Kephart e Chess (2003) que serviram
+de motivac¸ao para a proposta de sistemas autoadaptativos. Para Huebscher e Mc- ˜
+Cann (2008), caracter´isticas como autoconfigurac¸ao, auto-otimizac¸ ˜ ao, autocorrec¸ ˜ ao e ˜
+autoprotec¸ao fazem parte da ess ˜ encia dos sistemas autoadaptativos, fazendo com que ˆ
+essa nova classe de sistemas tenha autonomia suficiente para operar com o m´inimo de
+intervenc¸ao humana. ˜
+Um sistema autoadaptativo possui a capacidade, em tempo de execuc¸ao, de modi- ˜
+ficar o seu comportamento ou sua estrutura atraves de adaptac¸ ´ oes em resposta a mudanc¸as ˜
+no ambiente, que podem representar uma simples reconfigurac¸ao ou at ˜ e uma modificac¸ ´ ao˜
+no modelo do sistema, resultando em uma alterac¸ao de sua arquitetura [Chen et al. 2014]. ˜
+A adaptac¸ao pode acontecer para que uma funcionalidade do sistema n ˜ ao deixe de ser ˜
+executada (por exemplo, a troca de um servic¸o por outro similar caso o primeiro tenha
+1047
+SBCUP - 8º Simpósio Brasileiro de Computação Ubíqua e Pervasiva
+Lotus@Runtime: Uma Ferramenta para Monitoramento e
+Verificac¸ao em Tempo de Execuc¸ ˜ ao para Sistemas ˜
+Autoadaptativos
+Davi Monteiro Barbosa1, Paulo Henrique Mendes Maia1, Evilasio Costa J ´ unior ´ 1
+1Universidade Estadual do Ceara (UECE) ´
+Centro de Ciencias e Tecnologia - CCT ˆ
+Av. Dr. Silas Munguba, 1700, Campus do Itaperi – Fortaleza – CE
+davi.monteiro@aluno.uece.br, pauloh.maia@uece.br, junior.facanha@gmail.com
+Abstract. Self-adaptive systems have the ability to adapt their behavior during
+its execution in response to changes in the environment where it operates. To
+ensure the success of an adaptation, traditional approaches such as testing and
+software verification are insufficient. Therefore, it should adopt monitoring and
+runtime verification approaches to ensure that adaptations have the expected
+result. In this paper, we propose the Lotus@Runtime to perform, in an integrated
+manner, monitoring, verification, and violations notification found during
+execution of a self adaptive system.
+Resumo. Sistemas autoadaptativos possuem a capacidade de adaptar seu comportamento
+durante sua execuc¸ao em resposta ˜ as mudanc¸as no ambiente onde `
+esta inserido. Para garantir o sucesso de uma adaptac¸ ´ ao, abordagens tradicio- ˜
+nais como testes e verificac¸oes de software s ˜ ao insuficientes. Por isso, deve-se ˜
+adotar abordagens de monitoramento e verificac¸ao em tempo de execuc¸ ˜ ao para ˜
+assegurar que as adaptac¸oes tenham o resultado esperado. Neste trabalho, ˜ e´
+proposta uma ferramenta para realizar, de forma integrada, o monitoramento,
+a verificac¸ao e a notificac¸ ˜ ao de violac¸ ˜ oes encontradas durante a execuc¸ ˜ ao de ˜
+um sistema autoadaptativo.
+1. Introduc¸ao˜
+O crescimento da complexidade de sistemas, junto com o custo para mante-los ap ˆ os o ´
+seu desenvolvimento, foram fatores apontados por Kephart e Chess (2003) que serviram
+de motivac¸ao para a proposta de sistemas autoadaptativos. Para Huebscher e Mc- ˜
+Cann (2008), caracter´isticas como autoconfigurac¸ao, auto-otimizac¸ ˜ ao, autocorrec¸ ˜ ao e ˜
+autoprotec¸ao fazem parte da ess ˜ encia dos sistemas autoadaptativos, fazendo com que ˆ
+essa nova classe de sistemas tenha autonomia suficiente para operar com o m´inimo de
+intervenc¸ao humana. ˜
+Um sistema autoadaptativo possui a capacidade, em tempo de execuc¸ao, de modi- ˜
+ficar o seu comportamento ou sua estrutura atraves de adaptac¸ ´ oes em resposta a mudanc¸as ˜
+no ambiente, que podem representar uma simples reconfigurac¸ao ou at ˜ e uma modificac¸ ´ ao˜
+no modelo do sistema, resultando em uma alterac¸ao de sua arquitetura [Chen et al. 2014]. ˜
+A adaptac¸ao pode acontecer para que uma funcionalidade do sistema n ˜ ao deixe de ser ˜
+executada (por exemplo, a troca de um servic¸o por outro similar caso o primeiro tenha
+ficado indispon´ivel) ou para garantir que requisitos nao funcionais sejam atendidos, como ˜
+n´iveis de confiabilidade, seguranc¸a ou disponibilidade, dentre outros.
+Uma tecnica bastante utilizada no desenvolvimento de sistemas autoadaptativos ´ e´
+a construc¸ao de modelos arquiteturais ou de comportamento em tempo de projeto para ˜
+que sejam atualizados durante a execuc¸ao do sistema. Tais modelos s ˜ ao conhecidos como ˜
+models@runtime [Blair et al. 2009]. Esse cenario acontece, por exemplo, em sistemas ´
+que devem garantir requisitos expressos em termos de propriedades e que sao altamente ˜
+influenciados pela forma como o ambiente se comporta (por exemplo, levando em conta
+o perfil de comportamento do usuario). Com isso, ´ e poss ´ ´ivel verificar propriedades utilizando
+uma tecnica quantitativa, como a checagem de modelos ( ´ model checking), para prever
+e identificar violac¸oes dessas propriedades, bem como planejar os passos da adaptac¸ ˜ ao˜
+para prevenir ou recuperar o sistema das violac¸oes [Calinescu et al. 2012]. ˜
+Para enderec¸ar esses desafios, trabalhos como Goldsby et al. (2008), Arcaini et
+al. (2012) e Calinescu et al. (2013) apresentam propostas para realizar o monitoramento
+e a verificac¸ao em sistemas autoadaptativos. Por ˜ em, essas soluc¸ ´ oes geralmente s ˜ ao es- ˜
+pec´ificas para uma categoria de sistemas, como os baseados em servic¸o, o que torna dif´icil
+sua reutilizac¸ao para outros dom ˜ ´inios. Alem disso, a maioria faz uso de uma linguagem ´
+formal para especificar o comportamento do sistema e para definir as propriedades de interesse,
+o que tambem dificulta sua aplicac¸ ´ ao por usu ˜ arios que n ´ ao t ˜ em familiaridade com ˆ
+metodos formais. Por fim, esses trabalhos n ´ ao disponibilizam um ambiente integrado, ˜
+onde o usuario possa, na mesma ferramenta, realizar a modelagem, o monitoramento e a ´
+verificac¸ao do sistema. ˜
+Este trabalho apresenta Lotus@Runtime, uma ferramenta para realizar, de forma
+integrada, o monitoramento, a verificac¸ao e a notificac¸ ˜ ao de violac¸ ˜ oes encontradas du- ˜
+rante a execuc¸ao de um sistema autoadaptativo. O Lotus@Runtime realiza o monitora- ˜
+mento dos rastros de execuc¸ao ( ˜ traces) gerados por um sistema autoadaptativo para anotar
+o modelo do sistema baseado em Labelled Transition System (LTS) probabil´istico. Em seguida,
+as verificac¸oes em tempo de execuc¸ ˜ ao s ˜ ao realizadas a partir do modelo atualizado ˜
+e um conjunto de propriedades de alcanc¸abilidade. Caso uma propriedade seja violada, o
+sistema autoadaptativo sera notificado para realizar uma adaptac¸ ´ ao. A ferramenta foi uti- ˜
+lizada em um sistema autoadaptativo existente que nao fazia o uso de modelos em tempo ˜
+de execuc¸ao. Por isso, foi necess ˜ ario customizar o estudo de caso para que a aplicac¸ ´ ao˜
+pudesse ser adaptada de acordo com violac¸oes encontradas pelo Lotus@Runtime. Por ˜
+fim, por ser de codigo-fonte aberto, ela permite que a comunidade possa contribuir com ´
+melhorias e ajustes.
+O restante deste artigo encontra-se organizado da seguinte forma: a sec¸ao 2 apre- ˜
+senta o referencial teorico. Em seguida, a sec¸ ´ ao 3 descreve a ferramenta proposta, sua ˜
+arquitetura e seu funcionamento. Posteriormente, a sec¸ao 4 mostra um estudo de caso que ˜
+foi realizado na ferramenta Lotus@Runtime. A sec¸ao 5 apresenta os principais trabalhos ˜
+relacionados. Por fim, a sec¸ao 6 apresenta as considerac¸ ˜ oes finais. ˜
+2. Fundamentac¸ao Te ˜ orica ´
+Sistemas de software autoadaptativos modificam seu proprio comportamento em resposta ´
+as mudanc¸as de contexto [Oreizy et al. 1999]. Pelo contexto, entende-se o ambiente no `
+qual o sistema esta inserido, ou seja, quaisquer itens observ ´ aveis do sistema, tais como: ´
+XXXVI Congresso da Sociedade Brasileira de Computação
+1048
+entradas de usuario, sensores, outras aplicac¸ ´ oes, entre outros. No ˜ ambito de sistemas auto- ˆ
+adaptativos, as adaptac¸oes t ˜ em papel fundamental no sucesso de tais aplicac¸ ˆ oes. Por isso, ˜
+adaptac¸oes devem ocorrer dentro de um ciclo de vida intermin ˜ avel durante a execuc¸ ´ ao˜
+do sistema para que possam implantar as solicitac¸oes de mudanc¸as requeridas, tanto pelo ˜
+ambiente quanto pelos usuarios. ´
+O loop de controle MAPE-K (do ingles, ˆ Monitor, Analyze, Plan, Execute
+over Knowledge base) [Huebscher and McCann 2008, Cheng et al. 2009] tem
+sido utilizado como uma alternativa para viabilizar a autoadaptac¸ao em sistemas ˜
+de software [Salehie and Tahvildari 2009]. Em resumo, na proposta apresentada em
+[Oreizy et al. 1999], um sistema de software adquire comportamento autoadaptativo
+atraves das adaptac¸ ´ oes providas pelo ˜ loop de controle. Os sensores sao componentes de ˜
+software ou hardware responsaveis por coletar informac¸ ´ oes de um sistema autoadaptativo. ˜
+Os atuadores tambem s ´ ao componentes de software ou hardware, que s ˜ ao respons ˜ aveis ´
+por aplicar as adaptac¸oes provenientes do loop de controle diretamente em um sistema au- ˜
+toadaptativo. Por fim, Salehie e Tahvildari (2009) apresentam uma taxonomia sobre duas
+abordagens de adaptac¸ao: interna e externa. Na primeira a l ˜ ogica de adaptac¸ ´ ao est ˜ a em- ´
+butida no sistema de software. Na segunda, a logica de adaptac¸ ´ ao est ˜ a isolada do sistema ´
+de software.
+Uma vez que uma adaptac¸ao modifica o comportamento de um sistema autoadap- ˜
+tativo, verificac¸oes realizadas durante a fase de desenvolvimento s ˜ ao insuficientes para ˜
+garantir a conformidade no comportamento desses sistemas. Por isso, deve-se realizar
+verificac¸oes em tempo de execuc¸ ˜ ao com o objetivo de identificar violac¸ ˜ oes em proprie- ˜
+dades para que se possa planejar adaptac¸oes que previnam ou recuperem um sistema de ˜
+tais violac¸oes [Calinescu et al. 2012]. Desse modo, faz-se necess ˜ ario representar um sis- ´
+tema autoadaptativo em abstrac¸oes que possam acompanhar sua evoluc¸ ˜ ao no decorrer do ˜
+tempo. Para tanto, modelos em tempo de execuc¸ao s ˜ ao fortes candidatos para representar ˜
+a evoluc¸ao de tais sistemas [Bencomo et al. 2013]. Um modelo em tempo de execuc¸ ˜ ao˜
+pode ser definido como uma abstrac¸ao de uma representac¸ ˜ ao de um sistema, incluindo sua ˜
+estrutura, comportamento e objetivos, que visa atender um proposito especifico durante a ´
+execuc¸ao do sistema [Blair et al. 2009, Bencomo et al. 2013]. ˜
+3. Lotus@Runtime
+Lotus@Runtime foi desenvolvido com o objetivo de estender as funcionalidades do LoTuS1,
+ferramenta para modelagem grafica e an ´ alise de comportamento de software utili- ´
+zando LTS. LoTuS fornece aos usuarios um mecanismo de ´ drag and drop para a criac¸ao˜
+dos modelos, o que torna a modelagem mais facil e intuitiva. Al ´ em disso, a ferramenta ´
+tambem disponibiliza algumas t ´ ecnicas de an ´ alise de modelo, como detecc¸ ´ ao de ˜ deadlocks,
+simulac¸ao e execuc¸ ˜ ao, al ˜ em da verificac¸ ´ ao probabil ˜ ´isticas de propriedades de
+alcanc¸abilidade (reachability properties), que sao especificadas atrav ˜ es do estado de ori- ´
+gem e estado destino no modelo que se deseja alcanc¸ar.
+Lotus@Runtime aproveita esses benef´icios do LoTuS e fornece suporte para o
+monitoramento e verificac¸ao de software utilizando modelos probabil ˜ ´isticos em tempo de
+execuc¸ao. ˜
+1http://www.larces.uece.br/ gesad/ferramentas/lotus/
+1049
+SBCUP - 8º Simpósio Brasileiro de Computação Ubíqua e Pervasiva
+entradas de usuario, sensores, outras aplicac¸ ´ oes, entre outros. No ˜ ambito de sistemas auto- ˆ
+adaptativos, as adaptac¸oes t ˜ em papel fundamental no sucesso de tais aplicac¸ ˆ oes. Por isso, ˜
+adaptac¸oes devem ocorrer dentro de um ciclo de vida intermin ˜ avel durante a execuc¸ ´ ao˜
+do sistema para que possam implantar as solicitac¸oes de mudanc¸as requeridas, tanto pelo ˜
+ambiente quanto pelos usuarios. ´
+O loop de controle MAPE-K (do ingles, ˆ Monitor, Analyze, Plan, Execute
+over Knowledge base) [Huebscher and McCann 2008, Cheng et al. 2009] tem
+sido utilizado como uma alternativa para viabilizar a autoadaptac¸ao em sistemas ˜
+de software [Salehie and Tahvildari 2009]. Em resumo, na proposta apresentada em
+[Oreizy et al. 1999], um sistema de software adquire comportamento autoadaptativo
+atraves das adaptac¸ ´ oes providas pelo ˜ loop de controle. Os sensores sao componentes de ˜
+software ou hardware responsaveis por coletar informac¸ ´ oes de um sistema autoadaptativo. ˜
+Os atuadores tambem s ´ ao componentes de software ou hardware, que s ˜ ao respons ˜ aveis ´
+por aplicar as adaptac¸oes provenientes do loop de controle diretamente em um sistema au- ˜
+toadaptativo. Por fim, Salehie e Tahvildari (2009) apresentam uma taxonomia sobre duas
+abordagens de adaptac¸ao: interna e externa. Na primeira a l ˜ ogica de adaptac¸ ´ ao est ˜ a em- ´
+butida no sistema de software. Na segunda, a logica de adaptac¸ ´ ao est ˜ a isolada do sistema ´
+de software.
+Uma vez que uma adaptac¸ao modifica o comportamento de um sistema autoadap- ˜
+tativo, verificac¸oes realizadas durante a fase de desenvolvimento s ˜ ao insuficientes para ˜
+garantir a conformidade no comportamento desses sistemas. Por isso, deve-se realizar
+verificac¸oes em tempo de execuc¸ ˜ ao com o objetivo de identificar violac¸ ˜ oes em proprie- ˜
+dades para que se possa planejar adaptac¸oes que previnam ou recuperem um sistema de ˜
+tais violac¸oes [Calinescu et al. 2012]. Desse modo, faz-se necess ˜ ario representar um sis- ´
+tema autoadaptativo em abstrac¸oes que possam acompanhar sua evoluc¸ ˜ ao no decorrer do ˜
+tempo. Para tanto, modelos em tempo de execuc¸ao s ˜ ao fortes candidatos para representar ˜
+a evoluc¸ao de tais sistemas [Bencomo et al. 2013]. Um modelo em tempo de execuc¸ ˜ ao˜
+pode ser definido como uma abstrac¸ao de uma representac¸ ˜ ao de um sistema, incluindo sua ˜
+estrutura, comportamento e objetivos, que visa atender um proposito especifico durante a ´
+execuc¸ao do sistema [Blair et al. 2009, Bencomo et al. 2013]. ˜
+3. Lotus@Runtime
+Lotus@Runtime foi desenvolvido com o objetivo de estender as funcionalidades do LoTuS1,
+ferramenta para modelagem grafica e an ´ alise de comportamento de software utili- ´
+zando LTS. LoTuS fornece aos usuarios um mecanismo de ´ drag and drop para a criac¸ao˜
+dos modelos, o que torna a modelagem mais facil e intuitiva. Al ´ em disso, a ferramenta ´
+tambem disponibiliza algumas t ´ ecnicas de an ´ alise de modelo, como detecc¸ ´ ao de ˜ deadlocks,
+simulac¸ao e execuc¸ ˜ ao, al ˜ em da verificac¸ ´ ao probabil ˜ ´isticas de propriedades de
+alcanc¸abilidade (reachability properties), que sao especificadas atrav ˜ es do estado de ori- ´
+gem e estado destino no modelo que se deseja alcanc¸ar.
+Lotus@Runtime aproveita esses benef´icios do LoTuS e fornece suporte para o
+monitoramento e verificac¸ao de software utilizando modelos probabil ˜ ´isticos em tempo de
+execuc¸ao. ˜
+1http://www.larces.uece.br/ gesad/ferramentas/lotus/
+3.1. Arquitetura da ferramenta
+O Lotus@Runtime foi projetado com uma arquitetura extens´ivel baseada em componentes,
+possibilitando, dessa forma, um maior desacoplamento do seu codigo. A interface de ´
+programac¸ao disponibilizada pela ferramenta permite que componentes sejam instalados, ˜
+removidos, ou recuperados por outro componente. A Figura 1 ilustra os principais componentes
+que fazem parte da arquitetura do Lotus@Runtime: MonitorComponent,
+LotusModelComponent, ModelCheckerComponent, NotifierComponent
+e ConfigurationComponent. A seguir, cada componente e melhor detalhado. ´
+Figura 1. Arquitetura do Lotus@Runtime
+3.1.1. MonitorComponent
+Para realizar o monitoramento do sistema, optou-se por utilizar uma abordagem de monitoramento
+dos rastros de execuc¸ao gerados pela aplicac¸ ˜ ao [Maoz 2009]. Dessa forma, ˜
+pode-se extrair informac¸oes relevantes que ser ˜ ao essenciais para manter o modelo em ˜
+tempo de execuc¸ao sempre atualizado em relac¸ ˜ ao˜ a evoluc¸ ` ao do sistema. Cada rastro ˜ e´
+formado por uma sequencia de ac¸ ˆ oes vis ˜ ´iveis que representam eventos responsaveis pela ´
+mudanc¸a de estado do sistema. Assim, um log e um conjunto finito de rastros que uma ´
+aplicac¸ao pode gerar durante sua execuc¸ ˜ ao. ˜
+O MonitorComponent e o componente respons ´ avel por monitorar os rastros ´
+que sao gerados por um sistema autoadaptativo. Dessa forma, o monitoramento da ˜
+aplicac¸ao˜ e realizado atrav ´ es da leitura do arquivo de ´ log, o qual deve estar no formato
+CSV. Cada linha no arquivo representa um rastro da aplicac¸ao e cada ac¸ ˜ ao de mudanc¸a de ˜
+estado e separada por uma v ´ ´irgula em seus respectivos rastros. Existem duas estrategias ´
+para monitorar os rastros: na primeira, verifica-se a existencia de um novo rastro de acordo ˆ
+com uma periodicidade definida pelo usuario (em milisegundos), enquanto na segunda ´
+verifica-se apenas a existencia de um novo rastro caso ocorra uma alterac¸ ˆ ao no arquivo de ˜
+log.
+3.1.2. LotusModelComponent
+Para atender a necessidade de manter o modelo de um sistema autoadaptativo atualizado `
+em relac¸ao˜ as constantes adaptac¸ ` oes que ocorrem ao longo do tempo, foi criado o compo- ˜
+XXXVI Congresso da Sociedade Brasileira de Computação
+1050
+nente LotusModelComponent, o qual e respons ´ avel por manter o modelo atualizado ´
+em relac¸ao˜ as mudanc¸as no comportamento da aplicac¸ ` ao e oferecer servic¸os para recupe- ˜
+rar o modelo atualizado para outros componentes do Lotus@Runtime.
+O Lotus@Runtime usa o modelo do sistema representado como um LTS
+e criado de forma grafica atrav ´ es da ferramenta LoTuS. A partir das informac¸ ´ oes ˜
+extra´idas pelo MonitorComponent dos rastros de execuc¸ao da aplicac¸ ˜ ao, o ˜
+LotusModelComponent atualiza as probabilidades de ocorrencia de cada ac¸ ˆ ao do ˜
+modelo e as anota em suas respectivas transic¸oes. Dessa forma, o modelo de comporta- ˜
+mento do sistema passa a ser um LTS probabil´istico, que pode ser visto como uma Cadeia
+de Markov de Tempo Discreto (DTMC) rotulada.
+3.1.3. ModelCheckerComponent
+Uma vez que o modelo de uma aplicac¸ao autoadaptativa esteja atualizado, pode-se ˜
+entao realizar verificac¸ ˜ oes em tempo de execuc¸ ˜ ao com o objetivo de encontrar poss ˜ ´iveis
+violac¸oes de alguma propriedade especificada pelo usu ˜ ario. No Lotus@Runtime, uma ´
+propriedade e representada pela classe ´ Property, composta por atributos que identificam
+um estado de origem e estado de destino de um modelo LTS, uma condic¸ao l ˜ ogica ´
+que se deseja verificar e uma probabilidade de ocorrencia. ˆ
+Apos definir um conjunto de propriedades que devem ser satisfeitas, o componente ´
+ModelCheckerComponent pode realizar verificac¸oes probabil ˜ ´isticas no modelo. Em
+uma verificac¸ao, o componente utiliza um algoritmo de alcance probabil ˜ ´istico para calcular
+a probabilidade do sistema ir de um estado inicial para um estado final, onde cada
+estado esta definido em uma propriedade. ´
+Em seguida, a probabilidade que foi calculada sera comparada com a probabili- ´
+dade que foi especificada na propriedade. Caso o resultado nao satisfac¸a o valor por ela ˜
+esperado, o que constitui uma violac¸ao, o ˜ ModelCheckerComponent deve invocar o
+servic¸o de notificac¸ao do ˜ NotifierComponent.
+3.1.4. NotifierComponent
+As poss´iveis violac¸oes de propriedades s ˜ ao publicadas pelo ˜ NotifierComponent em
+um EventBus, seguindo o padrao de arquitetura ˜ publish subscriber [Eugster et al. 2003].
+Em seguida, para receber as violac¸oes que foram publicadas, deve-se implementar ˜
+a interface ViolationHandler e sobrescrever o metodo ´ handler(property).
+Recomenda-se que a implementac¸ao concreta de um ˜ ViolationHandler fac¸a parte
+da etapa de planejamento, pois, dessa forma, o planejador tera informac¸ ´ oes para projetar ˜
+adaptac¸oes que possam evitar poss ˜ ´iveis danos ao sistema.
+O componente ModelCheckerComponent faz o uso do servic¸o disponibilizado
+pelo NotifierComponent toda vez que uma verificac¸ao em tempo de execuc¸ ˜ ao˜
+encontra uma violac¸ao no modelo de uma aplicac¸ ˜ ao autoadaptativa. ˜
+1051
+SBCUP - 8º Simpósio Brasileiro de Computação Ubíqua e Pervasiva
+nente LotusModelComponent, o qual e respons ´ avel por manter o modelo atualizado ´
+em relac¸ao˜ as mudanc¸as no comportamento da aplicac¸ ` ao e oferecer servic¸os para recupe- ˜
+rar o modelo atualizado para outros componentes do Lotus@Runtime.
+O Lotus@Runtime usa o modelo do sistema representado como um LTS
+e criado de forma grafica atrav ´ es da ferramenta LoTuS. A partir das informac¸ ´ oes ˜
+extra´idas pelo MonitorComponent dos rastros de execuc¸ao da aplicac¸ ˜ ao, o ˜
+LotusModelComponent atualiza as probabilidades de ocorrencia de cada ac¸ ˆ ao do ˜
+modelo e as anota em suas respectivas transic¸oes. Dessa forma, o modelo de comporta- ˜
+mento do sistema passa a ser um LTS probabil´istico, que pode ser visto como uma Cadeia
+de Markov de Tempo Discreto (DTMC) rotulada.
+3.1.3. ModelCheckerComponent
+Uma vez que o modelo de uma aplicac¸ao autoadaptativa esteja atualizado, pode-se ˜
+entao realizar verificac¸ ˜ oes em tempo de execuc¸ ˜ ao com o objetivo de encontrar poss ˜ ´iveis
+violac¸oes de alguma propriedade especificada pelo usu ˜ ario. No Lotus@Runtime, uma ´
+propriedade e representada pela classe ´ Property, composta por atributos que identificam
+um estado de origem e estado de destino de um modelo LTS, uma condic¸ao l ˜ ogica ´
+que se deseja verificar e uma probabilidade de ocorrencia. ˆ
+Apos definir um conjunto de propriedades que devem ser satisfeitas, o componente ´
+ModelCheckerComponent pode realizar verificac¸oes probabil ˜ ´isticas no modelo. Em
+uma verificac¸ao, o componente utiliza um algoritmo de alcance probabil ˜ ´istico para calcular
+a probabilidade do sistema ir de um estado inicial para um estado final, onde cada
+estado esta definido em uma propriedade. ´
+Em seguida, a probabilidade que foi calculada sera comparada com a probabili- ´
+dade que foi especificada na propriedade. Caso o resultado nao satisfac¸a o valor por ela ˜
+esperado, o que constitui uma violac¸ao, o ˜ ModelCheckerComponent deve invocar o
+servic¸o de notificac¸ao do ˜ NotifierComponent.
+3.1.4. NotifierComponent
+As poss´iveis violac¸oes de propriedades s ˜ ao publicadas pelo ˜ NotifierComponent em
+um EventBus, seguindo o padrao de arquitetura ˜ publish subscriber [Eugster et al. 2003].
+Em seguida, para receber as violac¸oes que foram publicadas, deve-se implementar ˜
+a interface ViolationHandler e sobrescrever o metodo ´ handler(property).
+Recomenda-se que a implementac¸ao concreta de um ˜ ViolationHandler fac¸a parte
+da etapa de planejamento, pois, dessa forma, o planejador tera informac¸ ´ oes para projetar ˜
+adaptac¸oes que possam evitar poss ˜ ´iveis danos ao sistema.
+O componente ModelCheckerComponent faz o uso do servic¸o disponibilizado
+pelo NotifierComponent toda vez que uma verificac¸ao em tempo de execuc¸ ˜ ao˜
+encontra uma violac¸ao no modelo de uma aplicac¸ ˜ ao autoadaptativa. ˜
+3.1.5. ConfigurationComponent
+O componente ConfigurationComponent foi desenvolvido com o objetivo de
+centralizar os parametros de configurac¸ ˆ ao do Lotus@Runtime e fornecer, aos ou- ˜
+tros componentes, um mecanismo para recuperar tais parametros. Pode-se con- ˆ
+figurar o Lotus@Runtime atraves da interface de programac¸ ´ ao oferecida pelo ˜
+ConfigurationComponent ou com o aux´ilio do plugin Lotus@Runtime Configuration,
+que esta dispon ´ ´ivel para a ferramenta LoTuS e permite a configurac¸ao desses ˜
+parametros atrav ˆ es de uma interface gr ´ afica. Por interm ´ edio do ´ plugin pode-se adicionar,
+remover, importar e exportar as configurac¸oes em formato JSON que ser ˜ ao lidas no ˜
+momento da inicializac¸ao do Lotus@Runtime. ˜
+Os parametros de configurac¸ ˆ ao do Lotus@Runtime s ˜ ao: (i) nome do arquivo de ˜
+configurac¸ao; (ii) caminho do arquivo de ˜ log da aplicac¸ao autoadaptativa. (iii) caminho ˜
+do arquivo do modelo LoTuS. (iv) tempo, em milissegundos, para verificar a existencia ˆ
+de novos rastros de execuc¸ao; (v) lista de propriedades que deseja-se verificar em tempo ˜
+de execuc¸ao. ˜
+3.2. Fluxo de uma adaptac¸ao˜
+No Lotus@Runtime, o fluxo de uma adaptac¸ao, ilustrado na Figura 2, inicia-se pelo mo- ˜
+nitoramento dos rastro de execuc¸ao gerados por um sistema autoadaptativo. Os rastros de ˜
+execuc¸ao s ˜ ao capturados durante a fase de monitoramento pelo ˜ MonitorComponent. Em
+seguida, durante o processo de atualizac¸ao do modelo, o ˜ LotusModelComponent calcula
+as probabilidades de cada transic¸ao de estado e atualiza o modelo com as novas probabi- ˜
+lidades em tempo de execuc¸ao. Ap ˜ os a atualizac¸ ´ ao do modelo, ˜ ModelCheckerComponent
+realiza as verificac¸oes em tempo de execuc¸ ˜ ao durante o processo de verificac¸ ˜ ao. Caso ˜
+uma propriedade seja violada, entao˜ NotifierComponent deve notificar a etapa de planejamento
+sobre a violac¸ao que ocorreu. Em seguida, independente de ocorrer ou n ˜ ao uma ˜
+violac¸ao, o processo de monitoramento deve ser executado novamente de forma cont ˜ ´inua.
+Para que as violac¸oes sejam recebidas, deve-se implementar a interface ˜ ViolationHandler
+na etapa de planejamento, como descrito na sec¸ao 3.1.4. Caso contrario, as notificac¸ ˜ oes ˜
+serao perdidas. ˜
+Como pode ser visto na Figura 2, em comparac¸ao com o ciclo MAPE-K, os com- ˜
+ponentes do Lotus@Runtime implementam apenas as fases de monitoramento e analise, ´
+fornecendo uma notificac¸ao em caso de violac¸ ˜ ao de propriedades. As outras fases (plane- ˜
+jamento e execuc¸ao) devem ser implementadas pelo usu ˜ ario fora da ferramenta. ´
+4. Estudo de Caso
+O estudo possui o objetivo de avaliar o uso da ferramenta proposta neste trabalho atraves´
+da implementac¸ao das fases de monitoramento e an ˜ alise utilizando o Lotus@Runtime em ´
+uma aplicac¸ao que n ˜ ao foi desenvolvida pelos autores deste artigo. A aplicac¸ ˜ ao escolhida ˜
+para realizar o estudo de caso foi a implementac¸ao de refer ˜ encia Tele Assistente System ˆ
+(TAS) proposta por Weyns and Calinescu (2015). A aplicac¸ao segue os princ ˜ ´ipios propostos
+na arquitetura de referencia MAPE-K, o que motivou a escolha desta aplicac¸ ˆ ao no ˜
+estudo de caso. O material utilizado nesse estudo de caso esta dispon ´ ´ivel na conta de um
+dos autores autor no GitHub2.
+2https://github.com/davimonteiro
+XXXVI Congresso da Sociedade Brasileira de Computação
+1052
+Figura 2. Fluxo de uma adaptac¸ao˜
+A implementac¸ao de refer ˜ encia da aplicac¸ ˆ ao TAS foi desenvolvida utilizando a ˜
+plataforma ReSeP [Weyns and Calinescu 2015], que seleciona servic¸os durante a etapa
+de planejamento de acordo com uma pol´itica de menor custo ou maior confiabilidade que
+deve ser selecionada antes da inicializac¸ao de uma aplicac¸ ˜ ao autoadaptativa. Assim, caso ˜
+uma aplicac¸ao autoadaptativa seja executada utilizando a pol ˜ ´itica de maior confiabilidade,
+o planejador devera selecionar os servic¸os com menor taxa de falhas. ´
+4.1. Implementac¸ao do estudo de caso ˜
+O presente estudo de caso concentra seus esforc¸os em realizar as etapas de monitoramento
+e verificac¸ao na construc¸ ˜ ao do TAS utilizando o Lotus@Runtime. Dessa forma, ˜
+para validar o estudo de caso da ferramenta proposta, foi necessario realizar as seguin- ´
+tes atividades: (i) criar o modelo probabil´istico com o aux´ilio da ferramenta LoTuS; (ii)
+configurar o Lotus@Runtime atraves do ´ plugin de configurac¸ao; (iii) adicionar ao TAS a ˜
+capacidade de gerar rastros de execuc¸ao; (iv) receber as notificac¸ ˜ oes sobre as violac¸ ˜ oes ˜
+na etapa de planejamento e modificar a estrategia de selec¸ ´ ao dos servic¸os. ˜
+Como resultado da primeira atividade, foi criado na ferramenta LoTuS o modelo
+LTS probabil´istico, ilustrado na Figura 3. Esse modelo foi baseado no modelo em DTMC
+apresentado pelos autores Calinescu et al. (2013). Em seguida, a configurac¸ao do Lo- ˜
+tus@Runtime foi feita com o aux´ilio do plugin Lotus@Runtime Configuration. O arquivo
+de configurac¸ao˜ e composto pelo nome da configurac¸ ´ ao, o caminho onde est ˜ a localizado o ´
+arquivo de logs do sistema, o caminho onde esta localizado o arquivo contendo o modelo ´
+probabil´istico e as 2 propriedades que se desejam verificar, que sao: (P1) a probabili- ˜
+dade de uma falha apos o servic¸o de alarme deve ser menor que 20%, representado por ´
+alcanc¸ar o estado 5 a partir do estado 0, e (P2) a probabilidade de uma falha acontecer
+apos o servic¸o de farm ´ acia deve ser menor que 10%, o que ´ e representado pelo alcance ´
+do estado 11 a partir do estado 0.
+Posteriormente, para adicionar ao TAS a capacidade de gerar rastros de execuc¸ao, ˜
+foi necessario instrumentar o c ´ odigo fonte para que cada funcionalidade do TAS que cor- ´
+responde a uma ac¸ao no modelo de comportamento da aplicac¸ ˜ ao fosse gravada num ˜ log.
+Um exemplo de rastro de execuc¸ao gerado pela aplicac¸ ˜ ao˜ e´ start, vitalParamMsg, analyzeData,
+changeDrug, notifyPA, stopMsg, exit. O arquivo de logs gerado foi utilizado como
+entrada para a o plugin Lotus@Runtime Configuration, conforme descrito anteriormente.
+1053
+SBCUP - 8º Simpósio Brasileiro de Computação Ubíqua e Pervasiva
+Figura 2. Fluxo de uma adaptac¸ao˜
+A implementac¸ao de refer ˜ encia da aplicac¸ ˆ ao TAS foi desenvolvida utilizando a ˜
+plataforma ReSeP [Weyns and Calinescu 2015], que seleciona servic¸os durante a etapa
+de planejamento de acordo com uma pol´itica de menor custo ou maior confiabilidade que
+deve ser selecionada antes da inicializac¸ao de uma aplicac¸ ˜ ao autoadaptativa. Assim, caso ˜
+uma aplicac¸ao autoadaptativa seja executada utilizando a pol ˜ ´itica de maior confiabilidade,
+o planejador devera selecionar os servic¸os com menor taxa de falhas. ´
+4.1. Implementac¸ao do estudo de caso ˜
+O presente estudo de caso concentra seus esforc¸os em realizar as etapas de monitoramento
+e verificac¸ao na construc¸ ˜ ao do TAS utilizando o Lotus@Runtime. Dessa forma, ˜
+para validar o estudo de caso da ferramenta proposta, foi necessario realizar as seguin- ´
+tes atividades: (i) criar o modelo probabil´istico com o aux´ilio da ferramenta LoTuS; (ii)
+configurar o Lotus@Runtime atraves do ´ plugin de configurac¸ao; (iii) adicionar ao TAS a ˜
+capacidade de gerar rastros de execuc¸ao; (iv) receber as notificac¸ ˜ oes sobre as violac¸ ˜ oes ˜
+na etapa de planejamento e modificar a estrategia de selec¸ ´ ao dos servic¸os. ˜
+Como resultado da primeira atividade, foi criado na ferramenta LoTuS o modelo
+LTS probabil´istico, ilustrado na Figura 3. Esse modelo foi baseado no modelo em DTMC
+apresentado pelos autores Calinescu et al. (2013). Em seguida, a configurac¸ao do Lo- ˜
+tus@Runtime foi feita com o aux´ilio do plugin Lotus@Runtime Configuration. O arquivo
+de configurac¸ao˜ e composto pelo nome da configurac¸ ´ ao, o caminho onde est ˜ a localizado o ´
+arquivo de logs do sistema, o caminho onde esta localizado o arquivo contendo o modelo ´
+probabil´istico e as 2 propriedades que se desejam verificar, que sao: (P1) a probabili- ˜
+dade de uma falha apos o servic¸o de alarme deve ser menor que 20%, representado por ´
+alcanc¸ar o estado 5 a partir do estado 0, e (P2) a probabilidade de uma falha acontecer
+apos o servic¸o de farm ´ acia deve ser menor que 10%, o que ´ e representado pelo alcance ´
+do estado 11 a partir do estado 0.
+Posteriormente, para adicionar ao TAS a capacidade de gerar rastros de execuc¸ao, ˜
+foi necessario instrumentar o c ´ odigo fonte para que cada funcionalidade do TAS que cor- ´
+responde a uma ac¸ao no modelo de comportamento da aplicac¸ ˜ ao fosse gravada num ˜ log.
+Um exemplo de rastro de execuc¸ao gerado pela aplicac¸ ˜ ao˜ e´ start, vitalParamMsg, analyzeData,
+changeDrug, notifyPA, stopMsg, exit. O arquivo de logs gerado foi utilizado como
+entrada para a o plugin Lotus@Runtime Configuration, conforme descrito anteriormente.
+A estrategia de monitoramento adotada no estudo de caso foi a checagem de novos rastros ´
+a cada alterac¸ao no arquivo de ˜ logs.
+Por ultimo, para receber as notificac¸ ´ oes sobre as violac¸ ˜ oes, foi implementada a ˜
+classe LotusRuntimeHandler dentro da etapa de planejamento. Para realizar a troca
+de uma estrategia de selec¸ ´ ao de servic¸os dentro do TAS, foi necess ˜ ario alterar o compor- ´
+tamento do framework ReSeP. Assim, foi poss´ivel selecionar qual estrategia de selec¸ ´ ao˜
+de servic¸os deve ser utilizada, de acordo com as informac¸oes recebidas ap ˜ os a etapa de ´
+analise realizada pelo Lotus@Runtime. A estrat ´ egia de selec¸ ´ ao de servic¸os utilizada foi: ˜
+caso P1 seja seja violada, entao ser ˜ a selecionado os servic¸o de menor custo; caso P2 n ´ ao˜
+seja satisfeita, entao ser ˜ a selecionado o servic¸o com maior confiabilidade. ´ E importante ´
+ressaltar que o presente trabalho nao se prop ˜ oe a comparar a estrat ˜ egia de selec¸ ´ ao de ˜
+servic¸os adotada neste estudo de caso com a estrategia adotada no trabalho de Weyns e ´
+Calinescu (2015).
+Fazendo uma analise sobre o estudo de caso, podemos relatar que n ´ ao foi compli- ˜
+cado adaptar o codigo-fonte do TAS para utilizar o Lotus@Runtime nas fases de monito- ´
+ramento e analise. Al ´ em disso, pelo fato das estrat ´ egias de planejamento e execuc¸ ´ ao das ˜
+adaptac¸oes j ˜ a estarem implementadas no ´ framework ReSeP, o esforc¸o para tambem ade- ´
+quar essas etapas ao estudo de caso foi pequeno. Contudo, vale ressaltar que o estudo de
+caso introduziu duas tecnicas que n ´ ao haviam na aplicac¸ ˜ ao original: o monitoramento em ˜
+tempo real da aplicac¸ao atrav ˜ es dos rastros de execuc¸ ´ ao e o uso de um modelo atualizado ˜
+em tempo de execuc¸ao para verificac¸ ˜ ao de propriedades. ˜
+Figura 3. Modelo do Tele Assistence System (TAS)
+5. Trabalhos Relacionados
+No trabalho de Goldsby et al.(2008), os autores descrevem a ferramenta AMOEBA-RT
+que foi desenvolvida com o objetivo de realizar verificac¸oes em tempo de execuc¸ ˜ ao de sis- ˜
+temas autoadaptativos. A ferramenta faz o uso de uma abordagem nao intrusiva baseada ˜
+em programac¸ao orientada a aspectos para coletar informac¸ ˜ oes sobre o estado atual do ˜
+sistema. Apos serem coletadas, essas informac¸ ´ oes s ˜ ao enviadas para um servidor remoto, ˜
+onde um verificador de modelo confere se o estado atual do sistema satisfaz as propriedades
+que foram especificadas em formalismo baseado em LTL. Em resposta as violac¸ ` oes ˜
+detectadas, a ferramenta grava o caminho de execuc¸ao das violac¸ ˜ oes em um relat ˜ orio de ´
+erros no qual e processado ´ offline.
+XXXVI Congresso da Sociedade Brasileira de Computação
+1054
+Em Arcaini et al.(2012), os autores apresentam o CoMA, uma ferramenta para
+monitoramento em tempo de execuc¸ao de aplicac¸ ˜ oes Java. Nessa proposta, s ˜ ao utiliza- ˜
+das anotac¸oes Java para associar o c ˜ odigo-fonte do sistema monitorado com o modelo ´
+descrito no formalismo maquinas de estados abstratos (ASM). O monitor da ferramenta ´
+consegue extrair as informac¸oes sobre o estado do sistema em tempo de execuc¸ ˜ ao utili- ˜
+zando a ferramenta AspectJ. Apos a extrac¸ ´ ao dessas informac¸ ˜ oes, o monitor verifica se o ˜
+comportamento do sistema esta em conformidade com o comportamento esperado que foi ´
+especificado no formalismo ASM. Caso o monitor encontre uma nao conformidade, ser ˜ a´
+reportado um relatorio de erro que poder ´ a ser analisado quando o sistema estiver ´ offline.
+No trabalho de Filieri et al.(2011) e proposta uma abordagem para verificac¸ ´ ao de ˜
+modelo em tempo de execuc¸ao mais eficiente do que as soluc¸ ˜ oes tradicionais como o ˜
+PRISM. O autor propoe uma abordagem que utiliza DTMC para expressar o modelo do ˜
+sistema e representa-lo atrav ´ es da linguagem formal PCTL ( ´ Probabilistic Computation
+Tree Logic) para expressar as propriedades do sistema. Os resultados apresentados pelo
+autor mostram que sua abordagem, diferente das ferramentas PRISM e MRMC, obteve
+uma performance constante mesmo com o aumento do numero de estados do DTMC. ´
+No trabalho de Calinescu et al.(2013), os autores apresentam o framework COVE
+para criar sistemas autoadaptativos baseados em servic¸os. Os sistemas autoadaptativos
+constru´idos com base no COVE devem, de preferencia, ter servic¸os redundantes com diferentes
+taxas de confiabilidade e custo. Dessa forma, o COVE pode realizar verificac¸oes ˜
+formais no modelo a fim de garantir que o sistema utilize servic¸os confiaveis com o ´
+m´inimo de custo poss´ivel. Para tal, o framework realiza verificac¸oes utilizando a ferra- ˜
+menta PRISM [Hinton et al. 2006] para analisar o modelo do sistema definido em DTMC.
+Os trabalhos acima utilizam verificadores externos e formalismos para representar
+o comportamento de sistemas. Diferentemente, o presente trabalho realiza a verificac¸ao˜
+em um ambiente integrado que abrange desde a construc¸ao do modelo de comportamento ˜
+de forma grafica at ´ e a notificac¸ ´ ao de violac¸ ˜ oes encontradas em tempo de execuc¸ ˜ ao. ˜
+6. Considerac¸oes Finais ˜
+Este trabalho apresentou o Lotus@Runtime para realizar, de forma integrada, o monitoramento,
+a verificac¸ao e a notificac¸ ˜ ao de violac¸ ˜ oes encontradas durante a execuc¸ ˜ ao de um ˜
+sistema autoadaptativo. Para validar a ferramenta proposta, foi desenvolvido um estudo de
+caso para a aplicac¸ao de refer ˜ encia Tele Assistance System [Weyns and Calinescu 2015]. ˆ
+Uma limitac¸ao para adoc¸ ˜ ao da ferramenta proposta ˜ e a capacidade do sistema autoadap- ´
+tativo gerar rastros de execuc¸ao que permitam popular o modelo em tempo de execuc¸ ˜ ao. ˜
+Outra limitac¸ao atualmente ˜ e necessidade de implementar as etapas de planejamento e ´
+execuc¸ao para completar o ciclo MAPE-K. Como trabalhos futuros, pretende-se adici- ˜
+onar o monitoramento para aplicac¸oes em tempo real e suportar outras etapas do ciclo ˜
+MAPE-K. Alem disso, pretende-se desenvolver outros estudos de caso e realizar compa- ´
+rativos de desempenho, custo e confiabilidade com outras abordagens.
+Referencias ˆ
+Arcaini, P., Gargantini, A., and Riccobene, E. (2012). Coma: conformance monitoring
+of java programs by abstract state machines. In Runtime Verification, pages 223–238.
+Springer.
+1055
+SBCUP - 8º Simpósio Brasileiro de Computação Ubíqua e Pervasiva
+Em Arcaini et al.(2012), os autores apresentam o CoMA, uma ferramenta para
+monitoramento em tempo de execuc¸ao de aplicac¸ ˜ oes Java. Nessa proposta, s ˜ ao utiliza- ˜
+das anotac¸oes Java para associar o c ˜ odigo-fonte do sistema monitorado com o modelo ´
+descrito no formalismo maquinas de estados abstratos (ASM). O monitor da ferramenta ´
+consegue extrair as informac¸oes sobre o estado do sistema em tempo de execuc¸ ˜ ao utili- ˜
+zando a ferramenta AspectJ. Apos a extrac¸ ´ ao dessas informac¸ ˜ oes, o monitor verifica se o ˜
+comportamento do sistema esta em conformidade com o comportamento esperado que foi ´
+especificado no formalismo ASM. Caso o monitor encontre uma nao conformidade, ser ˜ a´
+reportado um relatorio de erro que poder ´ a ser analisado quando o sistema estiver ´ offline.
+No trabalho de Filieri et al.(2011) e proposta uma abordagem para verificac¸ ´ ao de ˜
+modelo em tempo de execuc¸ao mais eficiente do que as soluc¸ ˜ oes tradicionais como o ˜
+PRISM. O autor propoe uma abordagem que utiliza DTMC para expressar o modelo do ˜
+sistema e representa-lo atrav ´ es da linguagem formal PCTL ( ´ Probabilistic Computation
+Tree Logic) para expressar as propriedades do sistema. Os resultados apresentados pelo
+autor mostram que sua abordagem, diferente das ferramentas PRISM e MRMC, obteve
+uma performance constante mesmo com o aumento do numero de estados do DTMC. ´
+No trabalho de Calinescu et al.(2013), os autores apresentam o framework COVE
+para criar sistemas autoadaptativos baseados em servic¸os. Os sistemas autoadaptativos
+constru´idos com base no COVE devem, de preferencia, ter servic¸os redundantes com diferentes
+taxas de confiabilidade e custo. Dessa forma, o COVE pode realizar verificac¸oes ˜
+formais no modelo a fim de garantir que o sistema utilize servic¸os confiaveis com o ´
+m´inimo de custo poss´ivel. Para tal, o framework realiza verificac¸oes utilizando a ferra- ˜
+menta PRISM [Hinton et al. 2006] para analisar o modelo do sistema definido em DTMC.
+Os trabalhos acima utilizam verificadores externos e formalismos para representar
+o comportamento de sistemas. Diferentemente, o presente trabalho realiza a verificac¸ao˜
+em um ambiente integrado que abrange desde a construc¸ao do modelo de comportamento ˜
+de forma grafica at ´ e a notificac¸ ´ ao de violac¸ ˜ oes encontradas em tempo de execuc¸ ˜ ao. ˜
+6. Considerac¸oes Finais ˜
+Este trabalho apresentou o Lotus@Runtime para realizar, de forma integrada, o monitoramento,
+a verificac¸ao e a notificac¸ ˜ ao de violac¸ ˜ oes encontradas durante a execuc¸ ˜ ao de um ˜
+sistema autoadaptativo. Para validar a ferramenta proposta, foi desenvolvido um estudo de
+caso para a aplicac¸ao de refer ˜ encia Tele Assistance System [Weyns and Calinescu 2015]. ˆ
+Uma limitac¸ao para adoc¸ ˜ ao da ferramenta proposta ˜ e a capacidade do sistema autoadap- ´
+tativo gerar rastros de execuc¸ao que permitam popular o modelo em tempo de execuc¸ ˜ ao. ˜
+Outra limitac¸ao atualmente ˜ e necessidade de implementar as etapas de planejamento e ´
+execuc¸ao para completar o ciclo MAPE-K. Como trabalhos futuros, pretende-se adici- ˜
+onar o monitoramento para aplicac¸oes em tempo real e suportar outras etapas do ciclo ˜
+MAPE-K. Alem disso, pretende-se desenvolver outros estudos de caso e realizar compa- ´
+rativos de desempenho, custo e confiabilidade com outras abordagens.
+Referencias ˆ
+Arcaini, P., Gargantini, A., and Riccobene, E. (2012). Coma: conformance monitoring
+of java programs by abstract state machines. In Runtime Verification, pages 223–238.
+Springer.
+Bencomo, N., Bennaceur, A., Grace, P., Blair, G., and Issarny, V. (2013). The role of
+models@ run. time in supporting on-the-fly interoperability. Computing, 95(3):167–
+190.
+Blair, G., Bencomo, N., and France, R. B. (2009). Models@ run. time. Computer,
+42(10):22–27.
+Calinescu, R., Ghezzi, C., Kwiatkowska, M., and Mirandola, R. (2012). Self-adaptive
+software needs quantitative verification at runtime. Communications of the ACM,
+55(9):69–77.
+Calinescu, R., Johnson, K., and Rafiq, Y. (2013). Developing self-verifying service-based
+systems. In Automated Software Engineering (ASE), 2013 IEEE/ACM 28th International
+Conference on, pages 734–737. IEEE.
+Chen, B., Peng, X., Yu, Y., Nuseibeh, B., and Zhao, W. (2014). Self-adaptation through
+incremental generative model transformations at runtime. In 36th International Conference
+on Software Engineering, Hyderabad. ACM/IEEE.
+Cheng, B. H. C., de Lemos, R., Giese, H., Inverardi, P., et al. (2009). Software Engineering
+for Self-Adaptive Systems, chapter Software Engineering for Self-Adaptive
+Systems: A Research Roadmap, pages 1–26. Springer Berlin Heidelberg, Berlin, Heidelberg.
+Eugster, P. T., Felber, P. A., Guerraoui, R., and Kermarrec, A.-M. (2003). The many faces
+of publish/subscribe. ACM Computing Surveys (CSUR), 35(2):114–131.
+Filieri, A., Ghezzi, C., and Tamburrelli, G. (2011). Run-time efficient probabilistic model
+checking. In Proceedings of the 33rd international conference on software engineering,
+pages 341–350. ACM.
+Goldsby, H. J., Cheng, B. H., and Zhang, J. (2008). Amoeba-rt: Run-time verification of
+adaptive software. In Models in Software Engineering, pages 212–224. Springer.
+Hinton, A., Kwiatkowska, M., Norman, G., and Parker, D. (2006). Prism: A tool for
+automatic verification of probabilistic systems. In Tools and Algorithms for the Construction
+and Analysis of Systems, pages 441–444. Springer.
+Huebscher, M. C. and McCann, J. A. (2008). A survey of autonomic computing—degrees,
+models, and applications. ACM Computing Surveys (CSUR), 40(3):7.
+Kephart, J. O. and Chess, D. M. (2003). The vision of autonomic computing. Computer,
+36(1):41–50.
+Maoz, S. (2009). Using model-based traces as runtime models. Computer, 42(10):28–36.
+Oreizy, P., Gorlick, M. M., Taylor, R. N., Heimbigner, D., Johnson, G., Medvidovic, N.,
+Quilici, A., Rosenblum, D. S., and Wolf, A. L. (1999). An architecture-based approach
+to self-adaptive software. IEEE Intelligent systems, 14(3):54–62.
+Salehie, M. and Tahvildari, L. (2009). Self-adaptive software: Landscape and research
+challenges. ACM Transactions on Autonomous and Adaptive Systems (TAAS), 4(2):14.
+Weyns, D. and Calinescu, R. (2015). Tele assistance: a self-adaptive service-based system
+examplar. In Proceedings of the 10th International Symposium on Software Engineering
+for Adaptive and Self-Managing Systems, pages 88–92. IEEE Press.

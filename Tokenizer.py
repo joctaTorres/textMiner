@@ -19,7 +19,7 @@ class Tokenizer():
         )
 
     def openFile(self, path):
-        return open(path, "r").read()
+        return open(path, "r", encoding='latin-1').read()
 
     def tokenize(self, text):
         #customTagger = self.train()

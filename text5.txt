@@ -1,0 +1,553 @@
+XXXVI Congresso da Sociedade Brasileira de Computação
+1206
+Uma arquitetura para IoT direcionada a ci ` encia do contexto ˆ
+baseada em eventos distribu´idos
+Rodrigo Souza1,4, Joao Lopes ˜ 1,4, Anderson Cardozo3, Taina Carvalho ˜ 2,
+Patr´icia Davet2, Alexandre Wolf5, Adenauer Yamin2,3, Jorge Barbosa5, Claudio Geyer ´ 1
+1 Universidade Federal do Rio Grande do Sul (UFRGS) – Porto Alegre – RS – Brasil
+2Universidade Federal de Pelotas (UFPel) – Pelotas – RS – Brasil
+3Universidade Catolica de Pelotas (UCPel) – Pelotas – RS – Brasil ´
+4Instituto Federal Sul-rio-grandense (IFSUL) – Pelotas – RS – Brasil
+5Universidade do Vale do Rio dos Sinos (Unisinos) – Sao Leopoldo – RS – Brasil ˜
+{rssouza, jlblopes, geyer}@inf.ufrgs.br
+{ptdavet, trcarvalho}@inf.ufpel.edu.br
+{anderson.cardozo, adenauer}@ucpel.edu.br
+{awolf, jbarbosa}@unisinos.br
+
+Resumo. Os avanc¸os recentes no campo de Internet das Coisas (IoT - Internet
+of Things), que tem promovido uma disponibilidade cada vez maior de senso- ˆ
+res e atuadores conectados em rede, trouxe uma nova perspectiva as pesquisa `
+em ciencia de contexto na Computac¸ ˆ ao Ub ˜ ´iqua (Ubicomp). Neste sentido, a
+principal contribuic¸ao deste artigo ˜ e a proposta do ´ COIOT, uma arquitetura
+distribu´ida e orientada a eventos para a IoT constru´ida com o objetivo de prover,
+atraves de regras, o gerenciamento proativo das interac¸ ´ oes do meio f ˜ ´isico
+com Middleware EXEHDA. Para validar as funcionalidades da arquitetura proposta
+foi implementado um estudo de caso na area da agricultura. Os resultados ´
+obtidos foram promissores.
+1. Introduc¸ao˜
+Na Computac¸ao Ub ˜ ´iqua os sistemas computacionais devem ser capazes de reagir
+as mudanc¸as de estado das diferentes vari ` aveis contextuais de seu inte- ´
+resse. Essas variaveis contextuais devem ser coletadas em ambientes altamente dis- ´
+tribu´idos [Knappmeyer et al. 2013]. Por sua vez, os avanc¸os cient´ificos e tecnologicos ´
+1207
+SBCUP - 8º Simpósio Brasileiro de Computação Ubíqua e Pervasiva
+Uma arquitetura para IoT direcionada a ci ` encia do contexto ˆ
+baseada em eventos distribu´idos
+Rodrigo Souza1,4, Joao Lopes ˜ 1,4, Anderson Cardozo3, Taina Carvalho ˜ 2,
+Patr´icia Davet2, Alexandre Wolf5, Adenauer Yamin2,3, Jorge Barbosa5, Claudio Geyer ´ 1
+1 Universidade Federal do Rio Grande do Sul (UFRGS) – Porto Alegre – RS – Brasil
+2Universidade Federal de Pelotas (UFPel) – Pelotas – RS – Brasil
+3Universidade Catolica de Pelotas (UCPel) – Pelotas – RS – Brasil ´
+4Instituto Federal Sul-rio-grandense (IFSUL) – Pelotas – RS – Brasil
+5Universidade do Vale do Rio dos Sinos (Unisinos) – Sao Leopoldo – RS – Brasil ˜
+{rssouza, jlblopes, geyer}@inf.ufrgs.br
+{ptdavet, trcarvalho}@inf.ufpel.edu.br
+{anderson.cardozo, adenauer}@ucpel.edu.br
+{awolf, jbarbosa}@unisinos.br
+Abstract. The recent advances in the Internet of Things (IoT) area, which has
+provided an increasing availability of networked sensors and actuators, has given
+a new perspective to research in the context awareness in UbiComp. In this
+sense, the main contribution of this paper is the proposition of COIOT, a distributed
+architecture for IoT designed with the aim at providing, through rules, the
+proactive management of the EXEHDA Middleware interactions with the physical
+environment. To evaluate the functionalities of the proposed architecture
+we implemented a case study in the agricultural area. The achieved results are
+promising.
+Resumo. Os avanc¸os recentes no campo de Internet das Coisas (IoT - Internet
+of Things), que tem promovido uma disponibilidade cada vez maior de senso- ˆ
+res e atuadores conectados em rede, trouxe uma nova perspectiva as pesquisa `
+em ciencia de contexto na Computac¸ ˆ ao Ub ˜ ´iqua (Ubicomp). Neste sentido, a
+principal contribuic¸ao deste artigo ˜ e a proposta do ´ COIOT, uma arquitetura
+distribu´ida e orientada a eventos para a IoT constru´ida com o objetivo de prover,
+atraves de regras, o gerenciamento proativo das interac¸ ´ oes do meio f ˜ ´isico
+com Middleware EXEHDA. Para validar as funcionalidades da arquitetura proposta
+foi implementado um estudo de caso na area da agricultura. Os resultados ´
+obtidos foram promissores.
+1. Introduc¸ao˜
+Na Computac¸ao Ub ˜ ´iqua os sistemas computacionais devem ser capazes de reagir
+as mudanc¸as de estado das diferentes vari ` aveis contextuais de seu inte- ´
+resse. Essas variaveis contextuais devem ser coletadas em ambientes altamente dis- ´
+tribu´idos [Knappmeyer et al. 2013]. Por sua vez, os avanc¸os cient´ificos e tecnologicos ´
+recentes no campo de IoT tem viabilizado a utilizac¸ ˆ ao de sensores em larga escala, os ˜
+quais constituem fontes geradoras de informac¸oes contextuais para as aplicac¸ ˜ oes ub ˜ ´iquas
+cientes de contexto [Perera et al. 2014].
+Diversos desafios de pesquisa relacionados ao uso da IoT na obtenc¸ao de ˜
+informac¸oes contextuais s ˜ ao associados com as diferenc¸as entre os requisitos de alto- ˜
+n´ivel das aplicac¸oes ub ˜ ´iquas e as tarefas de gerenciamento dos dispositivos da IoT, as
+quais sao relacionadas com as caracter ˜ ´isticas eletronicas envolvidas [Perera et al. 2014]. ˆ
+A principal contribuic¸ao deste artigo consiste em preencher essa lacuna atrav ˜ es´
+da proposic¸ao do C ˜ OIOT (COntext + IOT), uma arquitetura integrada ao Middleware
+EXEHDA capaz de prover suporte ao tratamento de sensores e atuadores. O EXEHDA
+(Execution Environment for Highly Distributed Applications) [Lopes et al. 2014a] proveˆ
+uma arquitetura de software baseada em servic¸os que visa a criac¸ao e gerenciamento de ˜
+um ambiente ub´iquo, bem como a execuc¸ao de aplicac¸ ˜ oes sobre este ambiente. ˜
+O COIOT [Souza et al. 2015] e uma arquitetura baseada em eventos, gerenciada ´
+por regras, com processamento distribu´ido de contexto, capaz de agir proativamente na
+coleta das informac¸oes contextuais do ambiente f ˜ ´isico, bem como atuar remotamente sobre
+o mesmo.
+Este artigo esta organizado da seguinte forma: A sec¸ ´ ao 2 apresenta a modelagem ˜
+do COIOT, detalhando a sua arquitetura e funcionalidades. Na sec¸ao 3, ˜ e apresentado ´
+o prototipo e os testes realizados na ´ area da agricultura. Os trabalhos relacionados s ´ ao˜
+apresentados na sec¸ao 4. Por fim, na sec¸ ˜ ao 5, s ˜ ao realizadas as considerac¸ ˜ oes finais deste ˜
+artigo.
+2. COIOT: concepc¸ao e modelagem ˜
+A abordagem de tratamento de contexto proposta para o COIOT tem suas funcionalidades
+distribu´idas entre dois tipos de servidores: Servidor de Contexto e Servidor de Borda.
+O Servidor de Borda foi concebido para atuar, principalmente, no gerenciamento das
+interac¸oes com o ambiente f ˜ ´isico. Por sua vez, o Servidor de Contexto atua no armazenamento
+e processamento de informac¸ao contextuais [Lopes et al. 2014b]. ˜
+2.1. Modelo arquitetural proposto
+A arquitetura proposta para o COIOT, apresentada na Figura 1, foi concebida com o objetivo
+de gerenciar diferentes dispositivos da IoT, como sensores e atuadores heterogeneos. ˆ
+Esta arquitetura tem por premissa atuar de forma autonoma, tanto na coleta e processa- ˆ
+mento das informac¸oes contextuais, quanto na atuac¸ ˜ ao sobre o ambiente, uma vez que es- ˜
+sas atividades continuam a serem executadas mesmo nos per´iodos nos quais as aplicac¸oes ˜
+interessadas no seu uso estejam inoperantes.
+O processamento do contexto no COIOT se da de forma distribu ´ ´ida entre os Servidores
+de Borda e Contexto. O modulo ´ Motor de Regras (Servidor de Borda) constitui
+o primeiro n´ivel de processamento, enquanto o Processador de Contexto (Servidor de
+Contexto) o segundo n´ivel. As regras submetidas ao Motor de Regras devem ser elaboradas
+de forma a atender, prioritariamente, os eventos cr´iticos, cujo tratamento deve ser
+realizado no menor tempo poss´ivel e com m´inimo de falhas. Isso se deve ao fato de que
+o Servidor de Borda e geralmente alocado fisicamente pr ´ oximo ao ambiente monitorado, ´
+XXXVI Congresso da Sociedade Brasileira de Computação
+1208
+Figura 1. Arquitetura do COIOT
+permitindo uma atuac¸ao (alertas, ativac¸ ˜ ao/desativac¸ ˜ ao de equipamentos eletromec ˜ anicos, ˆ
+etc.) independentemente de uma eventual perda de comunicac¸ao com o Servidor de Con- ˜
+texto por decorrencia de uma falha na rede. Por outro lado, regras que necessitem in- ˆ
+cluir o tratamento de informac¸oes hist ˜ oricas, acessar dados coletados de outros Servido- ´
+res de Borda, ou que envolvam outros modelos de processamento de contexto, devem
+ser processadas no Servidor de Contexto. Ambos os modulos de processamento do con- ´
+texto foram concebidos tendo como base o modelo de regras tipo ECA (evento-condic¸ao- ˜
+ac¸ao) [Terfloth 2009], as quais podem ser disparadas a partir de eventos produzidos pelo ˜
+ambiente. Embora seja utilizado o modelo ECA como mecanismo basico de tratamento ´
+do contexto, tanto a condic¸ao a ser tratada quanto a ac¸ ˜ ao a ser executada pela regra admi- ˜
+tem outros modelos de processamento que podem ser chamados a partir da regra, os quais
+sao decorr ˜ encia do tipo de dom ˆ ´inio de aplicac¸ao a ser atendida pelo C ˜ OIOT.
+1209
+SBCUP - 8º Simpósio Brasileiro de Computação Ubíqua e Pervasiva
+Figura 1. Arquitetura do COIOT
+permitindo uma atuac¸ao (alertas, ativac¸ ˜ ao/desativac¸ ˜ ao de equipamentos eletromec ˜ anicos, ˆ
+etc.) independentemente de uma eventual perda de comunicac¸ao com o Servidor de Con- ˜
+texto por decorrencia de uma falha na rede. Por outro lado, regras que necessitem in- ˆ
+cluir o tratamento de informac¸oes hist ˜ oricas, acessar dados coletados de outros Servido- ´
+res de Borda, ou que envolvam outros modelos de processamento de contexto, devem
+ser processadas no Servidor de Contexto. Ambos os modulos de processamento do con- ´
+texto foram concebidos tendo como base o modelo de regras tipo ECA (evento-condic¸ao- ˜
+ac¸ao) [Terfloth 2009], as quais podem ser disparadas a partir de eventos produzidos pelo ˜
+ambiente. Embora seja utilizado o modelo ECA como mecanismo basico de tratamento ´
+do contexto, tanto a condic¸ao a ser tratada quanto a ac¸ ˜ ao a ser executada pela regra admi- ˜
+tem outros modelos de processamento que podem ser chamados a partir da regra, os quais
+sao decorr ˜ encia do tipo de dom ˆ ´inio de aplicac¸ao a ser atendida pelo C ˜ OIOT.
+O modulo ´ Repositorio de Contextos ´ utiliza um modelo relacional para a
+representac¸ao das informac¸ ˜ oes contextuais, o qual proporciona um registro hist ˜ orico des- ´
+ses dados. A estrutura do Repositorio de Contexto reflete a organizac¸ ´ ao da arquitetura do ˜
+Middleware EXEHDA, contemplando assim o relacionamento entre aplicac¸oes, compo- ˜
+nentes, sensores, ambientes e contextos de interesse. O repositorio tamb ´ em armazena a ´
+tabela de dados de configurac¸ao da arquitetura e as publicac¸ ˜ oes dos sensores existentes no ˜
+ambiente ub´iquo. Estes dados sao utilizados pelo m ˜ odulo Processador de Contexto para ´
+disparar as ac¸oes apropriadas dependendo das informac¸ ˜ oes contextuais. ˜
+Considerando a caracter´istica inerentemente distribu´ida das aplicac¸oes ub ˜ ´iquas,
+os Modulos de Interoperac¸ ´ ao˜ do COIOT foram concebidos para promover a interoperabilidade
+entre os Servidores de Borda e de Contexto, assim como com outros servic¸os
+do Middleware. A concepc¸ao deste m ˜ odulo teve como refer ´ encia o estilo arquitetural ˆ
+REST [Fielding 2000].
+O Notificador tem a func¸ao de gerar notificac¸ ˜ oes a partir dos resultados do pro- ˜
+cessamento do contexto realizado pelo Processador de Contexto. Este modulo utiliza uma ´
+estrategia de notificac¸ ´ ao baseada no modelo ˜ publish/subscribe, em que recebe subscric¸oes ˜
+de todos os servic¸os e/ou aplicac¸oes que requerem notificac¸ ˜ oes a respeito das mudanc¸as ˜
+nos estados dos contexto.
+Todas as configurac¸oes necess ˜ arias para o funcionamento do C ´ OIOT sao geren- ˜
+ciadas atraves de uma interface web disponibilizada pelo m ´ odulo ´ Configurador. Entre
+as funcionalidades oferecidas tem-se: a configurac¸ao de sensores e atuadores (inclus ˜ ao, ˜
+remoc¸ao e alterac¸ ˜ ao), o gerenciamento de ˜ drivers de dispositivos, gerenciamento das regras
+de processamento de contexto, configurac¸ao de acesso aos Servidores de Contexto e ˜
+Borda, entre outros.
+O modulo ´ Publicador tem a func¸ao de disparar as requisic¸ ˜ oes de envio de ˜
+informac¸oes contextuais para as demais camadas do ˜ Middleware, interoperando com o
+Servidor de Contexto atraves do M ´ odulo de Interoperac¸ ´ ao. As publicac¸ ˜ oes s ˜ ao organiza- ˜
+das em um sistema de fila FIFO e sao processadas conforme a disponibilidade da rede. ˜
+Considerando as poss´iveis falhas de comunicac¸ao entre o Servidor de Borda e o Servidor ˜
+de Contexto, bem como eventuais atrasos da rede, foi concebido o modulo de Persist ´ encia ˆ
+Local cuja func¸ao˜ e realizar o armazenamento tempor ´ ario da fila de informac¸ ´ oes contex- ˜
+tuais ate que as mesmas sejam publicadas. ´
+Com o intuito de garantir a interoperabilidade com tecnologias de mercado, e
+tambem potencializar a distribuic¸ ´ ao das iniciativas de coleta e/ou atuac¸ ˜ ao, foram utili- ˜
+zados gateways de dois tipos: (i) Gateway proprietario, que tem funcionalidades hete- ´
+rogeneas variando de acordo com seus fabricantes, e o; (ii) Gateway nativo cujas funcio- ˆ
+nalidades operam de maneira integradas a arquitetura do C ` OIOT. O modulo ´ Gateway Virtual
+age como uma virtualizac¸ao do Gateway nativo e implementa dois tipos de m ˜ odulos ´
+basicos: ´ Drivers e Triggers. Drivers sao m ˜ odulos arquiteturais respons ´ aveis pelo acesso ´
+aos valores das grandezas f´isicas capturadas pelos sensores, bem como pelas execuc¸oes ˜
+de comandos enviados para os atuadores. Os Drivers encapsulam e controlam os sensores
+e atuadores de uma maneira individualizada, evitando que diferenc¸as operacionais
+destes dispositivos se propaguem a outros componentes da arquitetura. O Trigger gerencia
+a leitura de sensores atraves de eventos, tendo sido concebido para lidar com os ´
+XXXVI Congresso da Sociedade Brasileira de Computação
+1210
+dois principais tipos de eventos a serem tratados na IoT: eventos temporais e eventos do
+ambiente [Perera et al. 2014].
+O Modulo de Comunicac¸ ´ ao˜ e o Gerenciador de Recursos foram concebidos para
+gerenciar os aspectos associadas a comunicac¸ ` ao entre os ˜ Gateways e o Servidor de Borda.
+O Modulo de Comunicac¸ ´ ao administra as comunicac¸ ˜ oes atrav ˜ es de API REST enquanto ´
+o Gerenciador de Recursos prove um mecanismo de descoberta que gerencia a entrada e ˆ
+sa´ida de dispositivos na rede, ocorrencias t ˆ ´ipicas da IoT.
+O Modulo de Coleta ´ tem a func¸ao de direcionar as solicitac¸ ˜ oes de coleta aos ˜
+respectivos gateways sob demanda do Motor de Regras, do Servidor de Contexto, ou
+das aplicac¸oes. O m ˜ odulo ´ Supervisor aglutina os comandos de atuac¸ao, recebendo os ˜
+parametros de controle e resolvendo eventuais conflitos entre as requisic¸ ˆ oes de oriundas ˜
+de diferentes fontes. O Modulo de Atuac¸ ´ ao˜ tem uma func¸ao semelhante a do M ˜ odulo ´
+de Coleta, recebendo os comandos de atuac¸ao e seus par ˜ ametros operacionais (durac¸ ˆ ao, ˜
+energia de ativac¸ao, etc.) e os encaminhando aos ˜ gateways correspondentes para processamento
+adicional.
+2.2. Suporte ao tratamento de eventos proposto
+Na Internet das Coisas, eventos do ambiente ocorrem quando existe uma alterac¸ao im- ˜
+portante em algum contexto de interesse, por exemplo, uma temperatura atingindo certo
+valor ou a identificac¸ao da entrada de um usu ˜ ario em uma sala, entre outros. Esses even- ´
+tos devem ser interceptados pelo sistema de gerencia e notificac¸ ˆ oes devem ser enviadas ˜ as`
+aplicac¸oes para que as mesmas possam dar o tratamento adequado [Perera et al. 2014]. ˜
+Ambientes da IoT geram potencialmente uma grande quantidade de eventos que
+devem ser gerenciados pela arquitetura de suporte. O gerenciamento desses eventos por
+parte da arquitetura possibilita que os mesmos possam ser tratados no momento em que
+eles acontecem, permitindo uma reac¸ao r ˜ apida quando necess ´ ario [Razzaque et al. 2016]. ´
+Eventos sao frequentemente identificados como primitivos (discretos) ou comple- ˜
+xos (compostos). Um evento primitivo refere-se a uma ocorrencia instant ˆ anea, at ˆ omica ˆ
+de um acontecimento de interesse em um determinado instante de tempo. Enquanto que
+um evento complexo (tambem chamado de evento composto) consiste na combinac¸ ´ ao de ˜
+eventos primitivos ocorridos em um determinado intervalo de tempo [Terfloth 2009]. O
+COIOT prove suporte tanto a eventos primitivos quanto a eventos complexos, os quais ˆ
+podem ser utilizados para disparar regras ECA.
+O modelo de tratamento de eventos proposto para o COIOT considera um conjunto
+de eventos primitivos gerados a partir de: (i) mudanc¸as de estado dos contextos
+de interesse coletados atraves de sensores; (ii) ativac¸ ´ ao/desativac¸ ˜ ao de atuadores; e ˜
+(iii) alterac¸oes na infraestrutura do ambiente computacional. Estes eventos s ˜ ao apresen- ˜
+tados na Tabela 1. O suporte a eventos complexos e provido pelo C ´ OIOT a partir da
+composic¸ao de eventos atrav ˜ es l ´ ogicas condicionais tratadas pelas regras ECA e proces- ´
+sadas pelos Processadores de Contexto.
+3. COIOT: prototipac¸ao e testes ˜
+Esta sec¸ao resume os principais aspectos de prototipac¸ ˜ ao e testes realizados atrav ˜ es do ´
+projeto AMPLUS (Automatic Monitoring and Programmable Logging Ubiquitous Sys-
+1211
+SBCUP - 8º Simpósio Brasileiro de Computação Ubíqua e Pervasiva
+dois principais tipos de eventos a serem tratados na IoT: eventos temporais e eventos do
+ambiente [Perera et al. 2014].
+O Modulo de Comunicac¸ ´ ao˜ e o Gerenciador de Recursos foram concebidos para
+gerenciar os aspectos associadas a comunicac¸ ` ao entre os ˜ Gateways e o Servidor de Borda.
+O Modulo de Comunicac¸ ´ ao administra as comunicac¸ ˜ oes atrav ˜ es de API REST enquanto ´
+o Gerenciador de Recursos prove um mecanismo de descoberta que gerencia a entrada e ˆ
+sa´ida de dispositivos na rede, ocorrencias t ˆ ´ipicas da IoT.
+O Modulo de Coleta ´ tem a func¸ao de direcionar as solicitac¸ ˜ oes de coleta aos ˜
+respectivos gateways sob demanda do Motor de Regras, do Servidor de Contexto, ou
+das aplicac¸oes. O m ˜ odulo ´ Supervisor aglutina os comandos de atuac¸ao, recebendo os ˜
+parametros de controle e resolvendo eventuais conflitos entre as requisic¸ ˆ oes de oriundas ˜
+de diferentes fontes. O Modulo de Atuac¸ ´ ao˜ tem uma func¸ao semelhante a do M ˜ odulo ´
+de Coleta, recebendo os comandos de atuac¸ao e seus par ˜ ametros operacionais (durac¸ ˆ ao, ˜
+energia de ativac¸ao, etc.) e os encaminhando aos ˜ gateways correspondentes para processamento
+adicional.
+2.2. Suporte ao tratamento de eventos proposto
+Na Internet das Coisas, eventos do ambiente ocorrem quando existe uma alterac¸ao im- ˜
+portante em algum contexto de interesse, por exemplo, uma temperatura atingindo certo
+valor ou a identificac¸ao da entrada de um usu ˜ ario em uma sala, entre outros. Esses even- ´
+tos devem ser interceptados pelo sistema de gerencia e notificac¸ ˆ oes devem ser enviadas ˜ as`
+aplicac¸oes para que as mesmas possam dar o tratamento adequado [Perera et al. 2014]. ˜
+Ambientes da IoT geram potencialmente uma grande quantidade de eventos que
+devem ser gerenciados pela arquitetura de suporte. O gerenciamento desses eventos por
+parte da arquitetura possibilita que os mesmos possam ser tratados no momento em que
+eles acontecem, permitindo uma reac¸ao r ˜ apida quando necess ´ ario [Razzaque et al. 2016]. ´
+Eventos sao frequentemente identificados como primitivos (discretos) ou comple- ˜
+xos (compostos). Um evento primitivo refere-se a uma ocorrencia instant ˆ anea, at ˆ omica ˆ
+de um acontecimento de interesse em um determinado instante de tempo. Enquanto que
+um evento complexo (tambem chamado de evento composto) consiste na combinac¸ ´ ao de ˜
+eventos primitivos ocorridos em um determinado intervalo de tempo [Terfloth 2009]. O
+COIOT prove suporte tanto a eventos primitivos quanto a eventos complexos, os quais ˆ
+podem ser utilizados para disparar regras ECA.
+O modelo de tratamento de eventos proposto para o COIOT considera um conjunto
+de eventos primitivos gerados a partir de: (i) mudanc¸as de estado dos contextos
+de interesse coletados atraves de sensores; (ii) ativac¸ ´ ao/desativac¸ ˜ ao de atuadores; e ˜
+(iii) alterac¸oes na infraestrutura do ambiente computacional. Estes eventos s ˜ ao apresen- ˜
+tados na Tabela 1. O suporte a eventos complexos e provido pelo C ´ OIOT a partir da
+composic¸ao de eventos atrav ˜ es l ´ ogicas condicionais tratadas pelas regras ECA e proces- ´
+sadas pelos Processadores de Contexto.
+3. COIOT: prototipac¸ao e testes ˜
+Esta sec¸ao resume os principais aspectos de prototipac¸ ˜ ao e testes realizados atrav ˜ es do ´
+projeto AMPLUS (Automatic Monitoring and Programmable Logging Ubiquitous SysTabela
+1. Eventos primitivos do COIOT
+Evento N´ivel de Gerac¸ao˜ Descric¸ao˜
+Publication Gateway/Servidor de
+Borda
+Ocorre quando uma informac¸ao contextual ˜ e enviada ao ´
+Servidor de Borda ou Servidor de Contexto
+Actuation Gateway Ocorre quando um atuador e disparado ´
+NewDevice Gateway Ocorre quando um novo sensor ou atuador e identificado ´
+DeviceDisconect Gateway Ocorre quando um sensor ou atuador e desconectado ´
+NewGateway Servidor de Borda Ocorre quando um novo Gateway e inserido ´
+GatewayDisconect Servidor de Borda Ocorre quando um Gateway e desconectado ´
+Figura 2. (A) Gateway Nativo; (B) NodeMCU; (C) Raspberry PI; (D) Sensor de
+Temperatura DS18B20
+tem) usados para avaliar as funcionalidades do COIOT. O estudo de caso inclui tarefas relacionadas
+com o sensoriamento, coleta, processamento e notificac¸ao de contexto. Neste ˜
+estudo de caso foi desenvolvida uma ferramenta para avaliar as principais funcionalidades
+da arquitetura proposta.
+O projeto AMPLUS foi concebido para fornecer servic¸os moveis e cientes ´
+do contexto que permitem o armazenamento dos estados contextuais que caracterizam
+os equipamentos do Laboratorio Did ´ atico de An ´ alise de Sementes (LDAS - ´
+http://amplus.ufpel.edu.br/ldas), a gerac¸ao de notificac¸ ˜ oes e atuac¸ ˜ oes quando necess ˜ ario. ´
+3.1. Infraestrutura de hardware
+Para avaliar as funcionalidades do COIOT optou-se por utilizar no LDAS um conjunto
+de dispositivos que consistem de um Gateway nativo, 15 sensores e um atuador. Os
+sensores selecionados para este estudo de caso sao baseados na tecnologia de 1-Wire ˜
+(http://www.maximintegrated.com). Esta tecnologia e caracterizada como uma rede de ´
+transmissao de dados com base em dispositivos eletr ˜ onicos enderec¸ ˆ aveis, e se destaca pela ´
+sua versatilidade e a facilidade de implementac¸ao. Os sensores de temperatura utilizados ˜
+podem ser vistos na Figura 2(D). Este sensor e envolto em um inv ´ olucro de alum ´ ´inio para
+dar maior resistencia mec ˆ anica e isolar da umidade. O Gateway Nativo (Figura 2 (A)) ˆ
+foi desenvolvido utilizando NodeMCU o qual permite a conexao de at ˜ e sete dispositivos ´
+1-wire. NodeMCU (http://nodemcu.com/) e uma plataforma de c ´ odigo aberto para desen- ´
+volvimento de dispositivos IoT (vide Figura 2 (B)). Para explorar a caracter´istica reativa
+da arquitetura, tambem foi utilizado um atuador (alerta luminoso) com base na tecnologia ´
+de 1-Wire. Este atuador e acionado quando ´ e necess ´ aria a atenc¸ ´ ao dos trabalhadores do ˜
+laboratorio com alguns equipamentos. ´
+XXXVI Congresso da Sociedade Brasileira de Computação
+1212
+3.2. Infraestrutura de software: principais caracter´isticas
+A maior parte do prototipo do C ´ OIOT foi escrita em Python no sistema operacional
+Raspbian. O hardware utilizado no Servidor de Borda e o Raspberry ´
+Pi (http://www.raspberrypi.org) (vide Figura 2 (C)). O Servidor de Contexto foi instalado
+em um hardware com processador Intel E3400-2.6GHz dual-core com 4GB
+de memoria, com o Linux Ubuntu Server como sistema operacional. A tecnolo- ´
+gia usada na implementac¸ao do Motor de Regras e do Processador de Contexto ˜ e´
+o Drools (http://www.drools.org/). A leitura dos sensores e feita atrav ´ es de dri- ´
+vers espec´ificos que fazem um tratamento individualizado dos dispositivos de acordo
+com as caracter´isticas tecnologicas de cada um. O M ´ odulo de Interoperac¸ ´ ao foi im- ˜
+plementado atraves do Sails.js (http://sailsjs.org/), um framework MVC (MVC) para ´
+Node.js (https://nodejs.org). A API REST desenvolvida fornece recursos para lidar com
+os sensores e atuadores, bem como para realizar a publicac¸ao dos dados coletados. Os ˜
+dados enviados atraves das operac¸ ´ oes REST s ˜ ao estruturados em JSON. ˜
+3.3. Infraestrutura de software: soluc¸oes desenvolvidas para o LDAS ˜
+O suporte do COIOT a operac¸ ` ao do cen ˜ ario de avaliac¸ ´ ao˜ e provido atrav ´ es de ´ triggers
+de leitura dos sensores e de um conjunto de regras de processamento de contexto. Os
+triggers sao utilizados para gerenciar as leituras dos sensores de temperatura das Incu- ˜
+badoras BODs (Biochemical oxygen demand) em duas situac¸oes: (i) em intervalos de ˜
+tempo regulares; e (ii) quando o valor esta fora da faixa especificada. As Incubadoras ´
+BODs sao utilizadas no LDAS para realizar testes de germinac¸ ˜ ao de sementes, os quais ˜
+exigem precisao quanto aos limites espec ˜ ´ificos para variac¸ao da temperatura. ˜
+As regras de processamento de contexto utilizadas foram organizadas entre os
+Servidores de Borda e Servidor de Contexto de modo a atender o cenario proposto. Os ´
+criterios utilizados na distribuic¸ ´ ao das regras foram: (i) minimizac¸ ˜ ao no fluxo de dados; e ˜
+(ii) continuidade do monitoramento mesmo em momentos de perda de comunicac¸ao entre ˜
+os servidores. As regras utilizadas sao apresentadas nas Tabelas 2 e 3. ˜
+A ferramenta desenvolvida possibilita a selec¸ao do contexto de interesse a ser exi- ˜
+bido, que pode ser apresentado na forma de um relatorio textual ou atrav ´ es de um modo ´
+grafico. Atrav ´ es da ferramenta o pesquisador do LDAS pode a ter acesso ´ a visualizac¸ ` ao˜
+das variac¸oes dos valores de temperatura e umidade ocorridas nas Incubadoras BODs ˜
+durante os per´iodos de analise, os quais influenciam diretamente nos resultados dos pro- ´
+cessos de germinac¸ao das sementes. ˜
+O relatorio gr ´ afico desenvolvido permite visualizar simultaneamente as curvas de ´
+variac¸ao dos valores de v ˜ arios sensores utilizados no LDAS (vide Figura 3). A selec¸ ´ ao dos ˜
+sensores a serem visualizados e feita a partir de um menu com suporte a m ´ ultipla selec¸ ´ ao. ˜
+Tambem´ e disponibilizado um recurso de inspec¸ ´ ao que permite a comparac¸ ˜ ao dos valores ˜
+em um determinado instante do tempo. A janela de tempo dos dados que estao sendo ˜
+visualizados pode ser definida pelo usuario atrav ´ es da mesma interface gr ´ afica que exibe ´
+os valores sensoriados.
+De forma a promover a proatividade do Projeto AMPLUS com a comunidade de
+usuarios, foram desenvolvidas interfaces para servic¸os de comunicac¸ ´ ao: e-mail e SMS ˜
+para a rede celular. O Servidor de Contexto produz essas mensagens a partir do processamento
+de regras de contexto de forma autonoma. ˆ
+1213
+SBCUP - 8º Simpósio Brasileiro de Computação Ubíqua e Pervasiva
+3.2. Infraestrutura de software: principais caracter´isticas
+A maior parte do prototipo do C ´ OIOT foi escrita em Python no sistema operacional
+Raspbian. O hardware utilizado no Servidor de Borda e o Raspberry ´
+Pi (http://www.raspberrypi.org) (vide Figura 2 (C)). O Servidor de Contexto foi instalado
+em um hardware com processador Intel E3400-2.6GHz dual-core com 4GB
+de memoria, com o Linux Ubuntu Server como sistema operacional. A tecnolo- ´
+gia usada na implementac¸ao do Motor de Regras e do Processador de Contexto ˜ e´
+o Drools (http://www.drools.org/). A leitura dos sensores e feita atrav ´ es de dri- ´
+vers espec´ificos que fazem um tratamento individualizado dos dispositivos de acordo
+com as caracter´isticas tecnologicas de cada um. O M ´ odulo de Interoperac¸ ´ ao foi im- ˜
+plementado atraves do Sails.js (http://sailsjs.org/), um framework MVC (MVC) para ´
+Node.js (https://nodejs.org). A API REST desenvolvida fornece recursos para lidar com
+os sensores e atuadores, bem como para realizar a publicac¸ao dos dados coletados. Os ˜
+dados enviados atraves das operac¸ ´ oes REST s ˜ ao estruturados em JSON. ˜
+3.3. Infraestrutura de software: soluc¸oes desenvolvidas para o LDAS ˜
+O suporte do COIOT a operac¸ ` ao do cen ˜ ario de avaliac¸ ´ ao˜ e provido atrav ´ es de ´ triggers
+de leitura dos sensores e de um conjunto de regras de processamento de contexto. Os
+triggers sao utilizados para gerenciar as leituras dos sensores de temperatura das Incu- ˜
+badoras BODs (Biochemical oxygen demand) em duas situac¸oes: (i) em intervalos de ˜
+tempo regulares; e (ii) quando o valor esta fora da faixa especificada. As Incubadoras ´
+BODs sao utilizadas no LDAS para realizar testes de germinac¸ ˜ ao de sementes, os quais ˜
+exigem precisao quanto aos limites espec ˜ ´ificos para variac¸ao da temperatura. ˜
+As regras de processamento de contexto utilizadas foram organizadas entre os
+Servidores de Borda e Servidor de Contexto de modo a atender o cenario proposto. Os ´
+criterios utilizados na distribuic¸ ´ ao das regras foram: (i) minimizac¸ ˜ ao no fluxo de dados; e ˜
+(ii) continuidade do monitoramento mesmo em momentos de perda de comunicac¸ao entre ˜
+os servidores. As regras utilizadas sao apresentadas nas Tabelas 2 e 3. ˜
+A ferramenta desenvolvida possibilita a selec¸ao do contexto de interesse a ser exi- ˜
+bido, que pode ser apresentado na forma de um relatorio textual ou atrav ´ es de um modo ´
+grafico. Atrav ´ es da ferramenta o pesquisador do LDAS pode a ter acesso ´ a visualizac¸ ` ao˜
+das variac¸oes dos valores de temperatura e umidade ocorridas nas Incubadoras BODs ˜
+durante os per´iodos de analise, os quais influenciam diretamente nos resultados dos pro- ´
+cessos de germinac¸ao das sementes. ˜
+O relatorio gr ´ afico desenvolvido permite visualizar simultaneamente as curvas de ´
+variac¸ao dos valores de v ˜ arios sensores utilizados no LDAS (vide Figura 3). A selec¸ ´ ao dos ˜
+sensores a serem visualizados e feita a partir de um menu com suporte a m ´ ultipla selec¸ ´ ao. ˜
+Tambem´ e disponibilizado um recurso de inspec¸ ´ ao que permite a comparac¸ ˜ ao dos valores ˜
+em um determinado instante do tempo. A janela de tempo dos dados que estao sendo ˜
+visualizados pode ser definida pelo usuario atrav ´ es da mesma interface gr ´ afica que exibe ´
+os valores sensoriados.
+De forma a promover a proatividade do Projeto AMPLUS com a comunidade de
+usuarios, foram desenvolvidas interfaces para servic¸os de comunicac¸ ´ ao: e-mail e SMS ˜
+para a rede celular. O Servidor de Contexto produz essas mensagens a partir do processamento
+de regras de contexto de forma autonoma. ˆ
+Tabela 2. Regras do Servidor de Borda
+Nome da Regra Evento Condic¸ao˜ Ac¸ao˜
+Le temp. BOD ˆ Publication Se valor fora do especificado Aciona alerta luminoso
+Publica temp. BOD Publication - Publica temperatura no Servidor
+de Contexto
+Tabela 3. Regras do Servidor de Contexto
+Nome da Regra Evento Condic¸ao˜ Ac¸ao˜
+Le temp. BOD ˆ Publication Se valor fora do especificado Notifica o usuario (e- ´
+mail/SMS)
+Persiste temp. BOD Publication - Persiste a temperatura no
+Repositorio de Contexto ´
+Figura 3. Relatorio Gr ´ afico ´
+A rotina dos laboratoristas implica na mobilidade por diferentes ambientes f´isicos
+do LDAS. Para resolver esta situac¸ao, uma interface foi desenvolvida para alertas visu- ˜
+ais, que sao ativados sempre que um dispositivo est ˜ a em um estado que requer atenc¸ ´ ao. ˜
+Considerando-se esses alertas, os detalhes podem ser inferidos atraves da interface da ´
+ferramenta de visualizac¸ao desenvolvida para o Projeto AMPLUS. ˜
+A avaliac¸ao da arquitetura do C ˜ OIOT ocorreu atraves da avaliac¸ ´ ao de aceitac¸ ˜ ao˜
+da ferramenta desenvolvida. O estudo envolveu 10 voluntarios, entre professores, alunos ´
+e tecnicos, com atividades relacionadas ao LDAS. Cada participante utilizou um desktop ´
+para acessar a ferramenta. Apos a realizac¸ ´ ao de um treinamento b ˜ asico, os participan- ´
+tes utilizaram a ferramenta de visualizac¸ao e responderam um question ˜ ario de avaliac¸ ´ ao, ˜
+considerando a experiencia de uso. ˆ
+O questionario foi constru ´ ´ido com base no Modelo de Aceitac¸ao de Tecnologia ˜
+XXXVI Congresso da Sociedade Brasileira de Computação
+1214
+(TAM), usando uma escala de Likert [Yoon and Kim 2007], que varia entre 1 e 5. Para
+a aceitac¸ao da ferramenta o modelo TAM considera: (i) Facilidade de uso: grau em que ˜
+o usuario avalia que a ferramenta pode reduzir seu esforc¸o; e (ii) Percepc¸ ´ ao de utilidade: ˜
+grau em que o usuario avalia que a ferramenta pode melhorar a sua experi ´ encia. A m ˆ edia ´
+dos resultados obtidos para facilidade de uso foi de 4,7 enquanto que para a percepc¸ao˜
+de utilidade foi obtida uma media de 4,4. A an ´ alise desses resultados mostrou que a ´
+aprovac¸ao foi elevada tanto para a facilidade de uso bem como para a percepc¸ ˜ ao de utili- ˜
+dade.
+4. Trabalhos relacionados
+O estudo da literatura permitiu identificar alguns trabalhos relacionados, entre as quais foram
+selecionados os seguintes: EcoDiF [Pires et al. 2014], Xively [LogMeIn 2015], Carriots
+[Carriots 2015] e LinkSmart [Kosteln´ik et al. 2011]. Os aspectos considerados na
+selec¸ao destes trabalhos relacionados foram: (i) o suporte ˜ a heterogeneidade; (ii) suporte `
+ao gerenciamento de eventos; (iii) ciencia do contexto; e (iv) interoperabilidade. ˆ
+Entre os trabalhos relacionados, a ciencia de contexto ˆ e suportada apenas pelo ´
+LinkSmart, mas o suporte oferecido e limitado. Por sua vez, o C ´ OIOT oferece um mecanismo
+para a coleta e processamento distribu´ido de contexto atraves de regras, bem como ´
+para a atuac¸ao sobre o ambiente. ˜
+Todos os trabalhos relacionados apresentam estrategias de ´ trigger para gerenciar o
+fluxo de dados transmitidos entre os diferentes dispositivos envolvidos. Um menor fluxo
+de dados traz benef´icios, principalmente, no que tange a escalabilidade e ao consumo `
+de energia. No entanto, Xively e Carriots nao oferecem ˜ triggers associados a coleta. `
+No COIOT, a abordagem de triggers foi concebida para permitir a personalizac¸ao da ˜
+coleta dos dados atraves de eventos considerando as caracter ´ ´isticas de variabilidade f´isica
+de cada grandeza monitorada, o que proporciona minimizar o fluxo de dados entre os
+gateways e o Servidor de Borda.
+A manipulac¸ao de eventos ˜ e suportado por todos os trabalhos selecionados, mas ´
+apenas o Carriots utiliza regras neste tratamento. Alem disso, o gerenciamento distribu ´ ´ido
+das regras entre os Servidores de Contexto e Borda e um diferencial em relac¸ ´ ao aos outros ˜
+projetos. Esta funcionalidade de processamento de contexto nos trabalhos relacionados,
+e normalmente restrita a um ´ unico dispositivo. ´
+5. Conclusao˜
+Este artigo resume os esforc¸os de pesquisa associados com a concepc¸ao do C ˜ OIOT.
+COIOT e uma arquitetura para a Internet das Coisas, integrado ao Middleware EXEHDA, ´
+que gerencia a coleta e pre-processamento das informac¸ ´ oes contextuais, oferecendo su- ˜
+porte a atuac¸ ` ao no ambiente. ˜
+A principal contribuic¸ao deste trabalho ˜ e concepc¸ ´ ao de uma arquitetura para IoT ˜
+direcionada a ci ` encia de contexto. A arquitetura proposta ˆ e orientada a eventos, baseada ´
+em regras e gerencia a coleta e processamento das informac¸oes contextuais, bem como as ˜
+atuac¸oes no ambiente f ˜ ´isico de forma distribu´ida. A estrategia adotada para a C ´ OIOT ampliou
+o escopo de utilizac¸ao do ˜ Middleware EXEHDA, permitindo seu uso em diferentes
+cenarios. ´
+1215
+SBCUP - 8º Simpósio Brasileiro de Computação Ubíqua e Pervasiva
+(TAM), usando uma escala de Likert [Yoon and Kim 2007], que varia entre 1 e 5. Para
+a aceitac¸ao da ferramenta o modelo TAM considera: (i) Facilidade de uso: grau em que ˜
+o usuario avalia que a ferramenta pode reduzir seu esforc¸o; e (ii) Percepc¸ ´ ao de utilidade: ˜
+grau em que o usuario avalia que a ferramenta pode melhorar a sua experi ´ encia. A m ˆ edia ´
+dos resultados obtidos para facilidade de uso foi de 4,7 enquanto que para a percepc¸ao˜
+de utilidade foi obtida uma media de 4,4. A an ´ alise desses resultados mostrou que a ´
+aprovac¸ao foi elevada tanto para a facilidade de uso bem como para a percepc¸ ˜ ao de utili- ˜
+dade.
+4. Trabalhos relacionados
+O estudo da literatura permitiu identificar alguns trabalhos relacionados, entre as quais foram
+selecionados os seguintes: EcoDiF [Pires et al. 2014], Xively [LogMeIn 2015], Carriots
+[Carriots 2015] e LinkSmart [Kosteln´ik et al. 2011]. Os aspectos considerados na
+selec¸ao destes trabalhos relacionados foram: (i) o suporte ˜ a heterogeneidade; (ii) suporte `
+ao gerenciamento de eventos; (iii) ciencia do contexto; e (iv) interoperabilidade. ˆ
+Entre os trabalhos relacionados, a ciencia de contexto ˆ e suportada apenas pelo ´
+LinkSmart, mas o suporte oferecido e limitado. Por sua vez, o C ´ OIOT oferece um mecanismo
+para a coleta e processamento distribu´ido de contexto atraves de regras, bem como ´
+para a atuac¸ao sobre o ambiente. ˜
+Todos os trabalhos relacionados apresentam estrategias de ´ trigger para gerenciar o
+fluxo de dados transmitidos entre os diferentes dispositivos envolvidos. Um menor fluxo
+de dados traz benef´icios, principalmente, no que tange a escalabilidade e ao consumo `
+de energia. No entanto, Xively e Carriots nao oferecem ˜ triggers associados a coleta. `
+No COIOT, a abordagem de triggers foi concebida para permitir a personalizac¸ao da ˜
+coleta dos dados atraves de eventos considerando as caracter ´ ´isticas de variabilidade f´isica
+de cada grandeza monitorada, o que proporciona minimizar o fluxo de dados entre os
+gateways e o Servidor de Borda.
+A manipulac¸ao de eventos ˜ e suportado por todos os trabalhos selecionados, mas ´
+apenas o Carriots utiliza regras neste tratamento. Alem disso, o gerenciamento distribu ´ ´ido
+das regras entre os Servidores de Contexto e Borda e um diferencial em relac¸ ´ ao aos outros ˜
+projetos. Esta funcionalidade de processamento de contexto nos trabalhos relacionados,
+e normalmente restrita a um ´ unico dispositivo. ´
+5. Conclusao˜
+Este artigo resume os esforc¸os de pesquisa associados com a concepc¸ao do C ˜ OIOT.
+COIOT e uma arquitetura para a Internet das Coisas, integrado ao Middleware EXEHDA, ´
+que gerencia a coleta e pre-processamento das informac¸ ´ oes contextuais, oferecendo su- ˜
+porte a atuac¸ ` ao no ambiente. ˜
+A principal contribuic¸ao deste trabalho ˜ e concepc¸ ´ ao de uma arquitetura para IoT ˜
+direcionada a ci ` encia de contexto. A arquitetura proposta ˆ e orientada a eventos, baseada ´
+em regras e gerencia a coleta e processamento das informac¸oes contextuais, bem como as ˜
+atuac¸oes no ambiente f ˜ ´isico de forma distribu´ida. A estrategia adotada para a C ´ OIOT ampliou
+o escopo de utilizac¸ao do ˜ Middleware EXEHDA, permitindo seu uso em diferentes
+cenarios. ´
+Na continuidade da pesquisa os seguintes aspectos devem ser considerados em
+trabalhos futuros: (i) expandir o uso do COIOT no LDAS, possibilitando o monitoramento
+de outros equipamentos de laboratorio e, consequentemente, incorporando outros tipos de ´
+sensores e atuadores; e (ii) continuar os procedimentos de integrac¸ao de C ˜ OIOT com os
+diferentes servic¸os e recursos do Middleware EXEHDA.
+Referencias ˆ
+Carriots (2015). Carriots. https://www.carriots.com/. Acessado em Maio de 2015.
+Fielding, R. T. (2000). Architectural Styles and the Design of Network-based Software
+Architectures. PhD thesis, UNIVERSITY OF CALIFORNIA, IRVINE.
+Knappmeyer, M., Kiani, S. L., Reetz, E. S., Baker, N., and Tonjes, R. (2013). Survey
+of Context Provisioning Middleware. IEEE Communications Surveys & Tutorials,
+15(3):1492–1519.
+Kosteln´ik, P., Sarnovsky, M., and Furd ´ ´ik, K. (2011). The semantic middleware for networked
+embedded systems applied in the internet of things and services domain. Scalable
+Computing, 12(3):307–315.
+LogMeIn, I. (2015). Xively. https://xively.com/. Acessado em Fevereiro de 2015.
+Lopes, J., Souza, R., Geyer, C., Costa, C., Barbosa, J., Pernas, A., and Yamin, A. (2014a).
+A Middleware Architecture for Dynamic Adaptation in Ubiquitous Computing. Journal
+of Universal Computer Science, 20(9):1327–1351.
+Lopes, J. L., de Souza, R. S., Pernas, A. M., Yamim, A., and Geyer, C. (2014b). A
+Distributed Architecture for Supporting Context-Aware Applications in UbiComp. In
+IEEE International Conference on Advanced Information Networking and Applications
+(AINA), Victoria, Canada. ´
+Perera, C., Zaslavsky, A., Christen, P., and Georgakopoulos, D. (2014). Context aware
+computing for the internet of things: A survey. IEEE Communications Surveys and
+Tutorials, 16(1):414–454.
+Pires, P. F., Cavalcante, E., Barros, T., Delicato, F. C., Batista, T., and Costa, B. (2014).
+A Platform for Integrating Physical Devices in the Internet of Things. 2014 12th IEEE
+International Conference on Embedded and Ubiquitous Computing, pages 234–241.
+Razzaque, M. A., Milojevic-Jevric, M., Palade, A., and Clarke, S. (2016). Middleware for
+Internet of Things: A Survey. IEEE INTERNET OF THINGS JOURNAL, 3(1):70–95.
+Souza, R., Lopes, J., Geyer, C., Garcia, C., Davet, P., and Yamin, A. (2015). Context
+awareness in UbiComp: An IoT oriented distributed architecture. In 2015 IEEE International
+Conference on Electronics, Circuits, and Systems (ICECS), pages 535–538.
+Terfloth, K. (2009). A Rule-Based Programming Model for Wireless Sensor Networks.
+PhD thesis, Freie Universitat Berlin. ¨
+Yoon, C. and Kim, S. (2007). Convenience and TAM in a ubiquitous computing environment:
+The case of wireless LAN. Electronic Commerce Research and Applications,
+6(1):102–112.
