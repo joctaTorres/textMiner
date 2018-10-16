@@ -20,6 +20,13 @@ class Miner():
         self.searchTag = tag
         self.searchWord = word
 
+        self.load()
+
+    def load(self):
+        self.writeDataframe(
+            self.generateDataframe()
+        )
+        
     def search(self):
         pass
         
@@ -29,13 +36,12 @@ class Miner():
         df['count'] = df.groupby(['PALAVRA', 'TAG'])['PALAVRA'].transform('count')
         df.drop_duplicates(inplace=True)
         df.sort_values(by=['count'], ascending=False , inplace=True, kind='quicksort')
-        self.writeDataframe(df)
+        return df
     
     def writeDataframe(self, df):
         fileDf = open('dataframe.pickle', 'wb')
         pickle.dump(df, fileDf)
         fileDf.close()
-        print('df saved')
     
     def readDataframe(self):
         file = open('dataframe.pickle', 'rb')
