@@ -22,6 +22,7 @@ class Miner():
     def search(self, tags=[], words=[]):
         if (tags == [] and words == []):
             raise ValueError('You must search for a tag or a word, or both.')
+            
         df = next(self.readDataframe())
         
         if (tags == []):
