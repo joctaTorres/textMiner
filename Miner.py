@@ -5,21 +5,13 @@ import pickle
 
 class Miner():
     filePath = ''
-    searchTag = []
-    searchWord = []
     tokenizer = Tokenizer('portuguese')
     writter = TokenWritter()
 
-    def __init__(self, path, tag, word):
+    def __init__(self, path):
         if (path == ''):
             raise ValueError('Path for file cannot be empty.')
-        if (tag is [] and word is []):
-            raise ValueError('You must search for a tag or a word, or both.')
-
         self.filePath = path
-        self.searchTag = tag
-        self.searchWord = word
-
         self.load()
 
     def load(self):
@@ -27,8 +19,20 @@ class Miner():
             self.generateDataframe()
         )
         
-    def search(self):
-        pass
+    def search(self, tags=[], words=[]):
+        if (tags == [] and words == []):
+            raise ValueError('You must search for a tag or a word, or both.')
+        df = next(self.readDataframe())
+        
+        if (tags == []):
+            return df[df['PALAVRA'].isin(words)]
+        
+        if (words == []):
+            return df[df['TAG'].isin(tags)]
+
+        wdf = df[df['PALAVRA'].isin(words)]
+        return wdf[wdf['TAG'].isin(tags)]
+        
         
     def generateDataframe(self):
         self.generateMidFile()
@@ -53,5 +57,3 @@ class Miner():
             self.tokenizer.tokenizeFileWords(self.filePath),
             'minerMid.csv'
         )
-
-Miner('./example.txt', ['tag'], ['word']).search()
