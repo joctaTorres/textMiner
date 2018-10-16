@@ -1,6 +1,7 @@
 from Tokenizer import Tokenizer
 from TokenWritter import TokenWritter
 import pandas as pd
+import pickle
 
 class Miner():
     filePath = ''
@@ -21,14 +22,25 @@ class Miner():
 
     def search(self):
         pass
-
+        
     def generateDataframe(self):
         self.generateMidFile()
         df = pd.read_csv('./minerMid.csv', sep=',', header=0)
         df['count'] = df.groupby(['PALAVRA', 'TAG'])['PALAVRA'].transform('count')
         df.drop_duplicates(inplace=True)
         df.sort_values(by=['count'], ascending=False , inplace=True, kind='quicksort')
-        
+        self.writeDataframe(df)
+    
+    def writeDataframe(self, df):
+        fileDf = open('dataframe.pickle', 'wb')
+        pickle.dump(df, fileDf)
+        fileDf.close()
+        print('df saved')
+    
+    def readDataframe(self):
+        file = open('dataframe.pickle', 'rb')
+        yield pickle.load(file)
+        file.close()
 
     def generateMidFile(self):
         self.writter.outputTokens(
